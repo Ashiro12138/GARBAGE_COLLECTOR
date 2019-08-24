@@ -14,8 +14,8 @@ class StackPlayer extends Player {
  
  @Override
  void initPosition() {
-   this.x = 780;
-   this.y = 580;
+   this.x = 100;
+   this.y = 100;
  }
  
  //constructor
@@ -23,4 +23,41 @@ class StackPlayer extends Player {
    initPosition(); 
    speed = 8;
  }
+ 
+ public void move(char direction) {
+    switch (direction) {
+      case 'd':
+        moveX(speed);
+        break;
+      case 'a':
+        moveX(-speed);
+        break;
+      case 'w':
+        moveY(-speed);
+        break;
+      case 's':
+        moveY(speed);
+        break;
+    }
+  }
+  
+
+  public void moveX(int x) {
+    int newX = this.x + x;
+    if (newX >= 0 && newX <= 1590) {
+       this.x += x; 
+    }
+  }
+  
+  public void moveY(int y) {
+    int newY = this.y + y;
+    if (newY >= 0 && newY <= 1190) {
+       this.y += y; 
+    }    
+  }
+  
+  void render() {
+         int section = map.getSectionByXY(this.x, this.y);
+         image(this.getSkin(), map.translateX(section, x), map.translateY(section, y));
+   }
 }

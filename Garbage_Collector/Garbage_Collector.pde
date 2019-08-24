@@ -84,19 +84,8 @@ void keyPressed() {
   }
     // stk movement (it's slower than ptr)
     key = Character.toLowerCase(key);
-    switch(key) {
-      case 'w':
-        stkBoi.moveY(-8);
-        break;
-      case 's':
-        stkBoi.moveY(8);
-        break;
-      case 'd':
-        stkBoi.moveX(8);// += 8;
-        break;
-      case 'a':
-        stkBoi.moveX(-8);// -= 8;  
-        break;
+    if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
+      stkBoi.move(key);
     }
     
 } 
@@ -150,7 +139,7 @@ void draw() {
     }
     ptrBoi.render();
     ptrBoi.calcSpeed();
-    //stkBoi.move();
+    //stkBoi.render();
     text("Memory Stolen:", 10, 30);
     text(ptrBoi.collectCount, 195, 30);
     text("Memory Stashed:", 10, 60);
