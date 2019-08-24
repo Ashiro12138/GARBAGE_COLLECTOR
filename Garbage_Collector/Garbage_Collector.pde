@@ -38,8 +38,8 @@ void setup() {
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
-  zoomGif = new Animation("MenuAnimation/menu_sprite", 51);
-  stkHit = new Animation("stackHitAnimation/stack_hit", 8);
+  zoomGif = new Animation("MenuAnimation/menu_sprite", 51, "jpg");
+  stkHit = new Animation("stackHitAnimation/stack_hit", 8, "png");
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   
