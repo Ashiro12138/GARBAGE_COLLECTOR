@@ -43,25 +43,28 @@ event call back that gets run once when a key is pressed.
 TODO: prevent starvation as one player holds down a key
 */
 void keyPressed() {
-  if (key == CODED) { 
-      if (keyCode == LEFT) {
-        ptrBoi.x -= 10;
-      } else if (keyCode == RIGHT) {
-        ptrBoi.x += 10;
-      } else if (keyCode == UP) {
-        ptrBoi.y -= 10;
-      }
-      else if (keyCode == DOWN) {
-        ptrBoi.y += 10;
-      }
-      println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
+  if (key == CODED) {
+    if (keyCode == RIGHT) {
+      ptrBoi.moveX(10);
+    } else if (keyCode == LEFT) {
+      ptrBoi.moveX(-10);
+    } else if (keyCode == UP) {
+      ptrBoi.moveY(-10);
+    } else if (keyCode == DOWN) {
+      ptrBoi.moveY(10);
+    }
+     
+    println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
   }
     // stk movement (it's slower than ptr)
     key = Character.toLowerCase(key);
     switch(key) {
       
+      
       case 'w':
-        stkBoi.y -= 8;
+        if (ptrBoi.y - 10 >= 0) {
+          stkBoi.y -= 8;
+        }
         break;
       case 's':
         stkBoi.y += 8;
