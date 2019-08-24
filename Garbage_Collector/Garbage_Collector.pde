@@ -34,7 +34,6 @@ int SCREEN_Y = 600;
 
 void setup() {
   size(800, 600);
-  randomSeed(0);
   ptrImg = loadImage("pointer_ai.png");
   stkImg = loadImage("stack_base.png");
   stkHit1 = loadImage("stack_hit1.png");
@@ -155,11 +154,18 @@ void draw() {
     int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
     int stkSection = map.getSectionByXY(stkBoi.x, stkBoi.y);
     for (int i = 0; i < POINTER_AMOUNT; ++i) {
-      ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
-      if (menuOption==0){
-        pointers[i].display(ptrSection);
+      pointers[i].chanceMove();
+      if(pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17)){
+        ptrBoi.collectCount += 1;
+        pointers[i].collected = true;
+        pointers[i].x = -100;
+        pointers[i].y = -100;
       } else {
-        pointers[i].display(stkSection);
+        if (menuOption==0){
+          pointers[i].display(ptrSection);
+        } else {
+          pointers[i].display(stkSection);
+        }
       }
         
     }
@@ -197,6 +203,5 @@ void draw() {
     
     //tick the game
     game.tick();
-
   }
 }

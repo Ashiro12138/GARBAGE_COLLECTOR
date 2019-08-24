@@ -33,7 +33,7 @@ class StackGame implements Game {
     
     c.write("hello\n");
     delay(10);
-    seed = millis();
+    seed = (int)millis();
     randomSeed(seed);
     c.write(str(seed)+"\n");
     
@@ -76,21 +76,24 @@ class StackGame implements Game {
       return;
     }
     
-    String[] data = split(c.readString(), ",");
-    String cmd = data[0]; 
-
-    if (cmd.equals("pos")) {
-       ptrBoi.x = int(data[1]);
-       ptrBoi.y = int(data[2].trim());
-       println("ptr moved to: " , ptrBoi.x, ptrBoi.y);
-    } else if (cmd.equals("collect")) {
-        ptrBoi.collectCount = int(data[1].trim());
-        println("collect " , ptrBoi.collectCount);
-    } else if (cmd.equals("stash")) {
-       ptrBoi.stashCount = int(data[1].trim()); 
-       println("stash" , ptrBoi.stashCount);
-    } else if (cmd.equals("over")) {
-       //handle game over 
+    String line = c.readString();
+    String[] datas = split(line, "\n");
+    for (String new_data: datas){
+      String[] data = split(new_data, ",");
+      String cmd = data[0]; 
+      if (cmd.equals("pos")) {
+         ptrBoi.x = int(data[1]);
+         ptrBoi.y = int(data[2]);
+         println("ptr moved to: " , ptrBoi.x, ptrBoi.y);
+      } else if (cmd.equals("collect")) {
+          ptrBoi.collectCount = int(data[1]);
+          println("collect " , ptrBoi.collectCount);
+      } else if (cmd.equals("stash")) {
+         ptrBoi.stashCount = int(data[1]); 
+         println("stash" , ptrBoi.stashCount);
+      } else if (cmd.equals("over")) {
+         //handle game over 
+      }
     }
   }
   

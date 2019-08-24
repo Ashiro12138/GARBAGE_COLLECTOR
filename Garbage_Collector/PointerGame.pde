@@ -26,8 +26,9 @@ class PointerGame implements Game {
       while (c.available() <= 0) {
         //busy wait
       }
-      String seed = c.readString().trim(); //readString() doesn't escape newline
-      randomSeed(int(seed));
+      String new_seed = c.readString().replace("\n",""); //readString() doesn't escape newline
+      seed = int(new_seed);
+      randomSeed(seed);
       
        
     }
@@ -35,13 +36,8 @@ class PointerGame implements Game {
     public void tick() {
       
      if (ptrBoi.x != lastX || ptrBoi.y != lastY) {
+       println("pos,"+ptrBoi.x+","+ptrBoi.y+"\n");
        c.write("pos,"+ptrBoi.x+","+ptrBoi.y+"\n"); 
-      }
-      if (ptrBoi.collectCount != lastCollect) {
-        c.write("collect,"+ptrBoi.collectCount+"\n");
-      }
-      if (ptrBoi.stashCount != lastStash) {
-        c.write("stash,"+ptrBoi.stashCount+"\n");
       }
     
     
@@ -49,8 +45,6 @@ class PointerGame implements Game {
       
       lastX = ptrBoi.x;
       lastY = ptrBoi.y;
-      lastCollect = ptrBoi.collectCount;
-      lastStash = ptrBoi.stashCount;
       
       //only render if they are in the same section
       if (map.getSectionByXY(stkBoi.x, stkBoi.y) == map.getSectionByXY(ptrBoi.x, ptrBoi.y)) {
@@ -60,13 +54,14 @@ class PointerGame implements Game {
       if (c.available() <= 0) {
         return;
       }
-      String[] data = split(c.readString(), ",");
+      String line = c.readString();
+      String[] data = split(line.replace("\n", ""), ",");
      
       String cmd = data[0]; 
       
       if (cmd.equals("pos")) {
          stkBoi.x = int(data[1]);
-         stkBoi.y = int(data[2].trim());
+         stkBoi.y = int(data[2]);
          println("stkBoi moved to: " , stkBoi.x, stkBoi.y);
 
       } else if (cmd.equals("over")) {
