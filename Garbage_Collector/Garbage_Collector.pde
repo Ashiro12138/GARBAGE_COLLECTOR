@@ -1,4 +1,4 @@
-// Pointer is client, stack player
+// Pointer is client, stack player is server
 
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
