@@ -1,12 +1,11 @@
 class Pointer{
   public int x, y;
   private int w = 17;
-  private int h = 17;
+  private int h = 17; 
   
   Pointer() {
     this.x = (int)random(0, width * 2 - w);
     this.y = (int)random(0, height * 2 - h);
-
   }
   
   Pointer(int x, int y) {
@@ -24,7 +23,7 @@ class Pointer{
   
   public int collision(int playerX, int playerY, int playerWidth, int playerHeight) {
     if(this.x+this.w > playerX && this.x < playerX+playerWidth && 
-        this.y+this.h > playerY && this.y < playerY+playerHeight){
+        this.y+this.h > playerY && this.y < playerY+playerHeight) {
       teleport();
       return 1;
     }

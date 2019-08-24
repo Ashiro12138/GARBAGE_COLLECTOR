@@ -5,6 +5,11 @@ import java.util.Date;
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg;
 PImage menuBg;
+PImage eyeImg;
+PImage bombImg;
+PImage bootsImg;
+PImage heartImg;
+PImage greenPtr;
 PImage pointerOption, stackOption;
 int menuOption = 0; //0 is pointer, 1 is stack
 
@@ -21,6 +26,13 @@ Pointer[] pointers = new Pointer[POINTER_AMOUNT];
 Animation zoomGif;
 Animation stkHit;
 
+// Power ups
+int itemsInGame = 0;
+Eye eye;
+Boots boots;
+Bomb bomb;
+Heart heart;
+
 
 boolean gameStarted = false;
 boolean zoomAnimationPlaying = false;
@@ -31,10 +43,18 @@ int SCREEN_X = 800;
 int SCREEN_Y = 600;
 
 
+
 void setup() {
   size(800, 600);
   ptrImg = loadImage("../Sprites/pointer_ai.png");
   stkImg = loadImage("stack_base.png");
+  greenPtr = loadImage("PowerUps/greenPointer.png");
+  eyeImg = loadImage("PowerUps/Eye.jpg");
+  bombImg = loadImage("PowerUps/Bomb.jpg");
+  bootsImg = loadImage("PowerUps/Boots.jpg");
+  heartImg = loadImage("../Sprites/Heart.jpg");
+  
+  //eyeImg = loadImage("") // TODO
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
@@ -48,6 +68,16 @@ void setup() {
   stkBoi = new StackPlayer();
   map = new Map();
 
+  //powerups
+  eye = new Eye();
+  eye.initPos();
+  boots = new Boots();
+  boots.initPos();
+  heart = new Heart();
+  heart.initPos();
+  bomb = new Bomb();
+  bomb.initPos();  
+  
   papaVoid = new Void(width, height);
   for (int i = 0; i < POINTER_AMOUNT; ++i) {
     pointers[i] = new Pointer();
@@ -73,14 +103,22 @@ void keyPressed() {
     } else if (keyCode == DOWN) {
        menuOption = 1; 
     }
+    //this.menuOption = 1;
   }
   
   if (key == CODED) {
     if (keyCode == RIGHT || keyCode == LEFT || keyCode == UP || keyCode == DOWN) {
-      ptrBoi.move(keyCode);
+      if (menuOption == 1) {
+        stkBoi.move(keyCode);
+      } else {
+         ptrBoi.move(keyCode);
+      }
+      
     }
-  } else if (key == ' ') {
-    ptrBoi.sacrificePointer();
+  } else if (key == ' ' && menuOption == 1) {
+    stkBoi.attackPointer();
+  } else if(key == ' ') {
+   ptrBoi.sacrificePointer(); 
   }
      
   //println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
@@ -139,9 +177,20 @@ void draw() {
     } else {
       ptrBoi.freeMove();
     }
+    // Check Powerups 
+    eye.update();
+    eye.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    boots.update();
+    boots.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    bomb.update();
+    bomb.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    heart.update();
+    heart.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    
+    
     ptrBoi.render();
     ptrBoi.calcSpeed();
-    //stkBoi.render();
+    stkBoi.render();
     text("Memory Stolen:", 10, 30);
     text(ptrBoi.collectCount, 195, 30);
     text("Memory Stashed:", 10, 60);

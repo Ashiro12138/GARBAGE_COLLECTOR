@@ -8,39 +8,33 @@ class StackPlayer extends Player {
   *as it fills up it returns a more 'filled up' stage
   * TODO: handle the filling up
  */
+ int health = 8;
+ ArrayList<String> spriteList = new ArrayList();
+ 
  PImage getSkin() {
    return stkImg;
  }
  
  @Override
  void initPosition() {
-   this.x = 100;
-   this.y = 100;
+   this.x = 10;
+   this.y = 10;
  }
  
  //constructor
  public StackPlayer() {
+   spriteList.add("stack_base.png");
+   spriteList.add("stackHitAnimation/stack_hit1.png");
+   spriteList.add("stackHitAnimation/stack_hit2.png");
+   spriteList.add("stackHitAnimation/stack_hit3.png");
+   spriteList.add("stackHitAnimation/stack_hit4.png");
+   spriteList.add("stackHitAnimation/stack_hit5.png");
+   spriteList.add("stackHitAnimation/stack_hit6.png");
+   spriteList.add("stackHitAnimation/stack_hit7.png");
+   spriteList.add("stackHitAnimation/stack_hit8.png");
    initPosition(); 
    speed = 8;
  }
- 
- public void move(char direction) {
-    switch (direction) {
-      case 'd':
-        moveX(speed);
-        break;
-      case 'a':
-        moveX(-speed);
-        break;
-      case 'w':
-        moveY(-speed);
-        break;
-      case 's':
-        moveY(speed);
-        break;
-    }
-  }
-  
 
   public void moveX(int x) {
     int newX = this.x + x;
@@ -56,8 +50,47 @@ class StackPlayer extends Player {
     }    
   }
   
+  public void setSkin() {
+    if (health < 0) {
+      die();
+    }
+    //Check if the health is dead here
+     stkImg = loadImage(spriteList.get(8-health));
+  }
+  
+  
+  //TODO: need a stack death
+  public void die() {
+    
+  }
+  
   void render() {
          int section = map.getSectionByXY(this.x, this.y);
          image(this.getSkin(), map.translateX(section, x), map.translateY(section, y));
    }
+   
+   public int attackPointer() {
+     int ptrx = ptrBoi.x;
+     int ptry = ptrBoi.y;
+     if (ptrx == this.x && ptry == this.y) {
+       ptrBoi.die();
+       return 1;
+     }
+     for (int i = 0; i < POINTER_AMOUNT; i++) {
+          if(pointers[i].collision(this.x, this.y, 17, 17) == 1) {
+            this.health--; 
+            setSkin();
+            println("you did oopsie");
+            break;
+          }
+       }
+      return 0;
+     }
+  void setSpeed(int speed) {
+    this.speed = speed;
+  }
+  
+  int getSpeed() {
+    return this.speed;
+  }
 }

@@ -1,0 +1,5 @@
+interface Game {
+  
+  void tick();
+  
+}
