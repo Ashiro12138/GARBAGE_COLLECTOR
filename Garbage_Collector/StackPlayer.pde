@@ -51,12 +51,18 @@ class StackPlayer extends Player {
   }
   
   public void setSkin() {
+    if (health < 0) {
+      die();
+    }
     //Check if the health is dead here
      stkImg = loadImage(spriteList.get(8-health));
   }
   
   
   //TODO: need a stack death
+  public void die() {
+    
+  }
   
   void render() {
          int section = map.getSectionByXY(this.x, this.y);
