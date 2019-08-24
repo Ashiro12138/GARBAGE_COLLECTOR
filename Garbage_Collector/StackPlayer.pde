@@ -17,7 +17,7 @@ class StackPlayer extends Player {
  
  @Override
  void initPosition() {
-   this.x = 10;
+   this.x = 750;
    this.y = 10;
  }
  
