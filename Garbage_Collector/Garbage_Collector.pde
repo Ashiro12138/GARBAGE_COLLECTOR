@@ -59,8 +59,17 @@ void keyPressed() {
     // stk movement (it's slower than ptr)
     key = Character.toLowerCase(key);
     switch(key) {
+<<<<<<< Updated upstream
       case 'w':
         stkBoi.moveY(-8);
+=======
+      
+      
+      case 'w':
+        if (ptrBoi.y - 10 >= 0) {
+          stkBoi.y -= 8;
+        }
+>>>>>>> Stashed changes
         break;
       case 's':
         stkBoi.moveY(8);
@@ -79,6 +88,7 @@ void keyPressed() {
 
 void draw() {
   
+<<<<<<< Updated upstream
   background(0); //this is REDRAW
   //int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
   //image(ptrImg, map.translateX(ptrBoi), map.translateY(ptrBoi)); //mouseX, mouseY for mouse pos
@@ -91,5 +101,18 @@ void draw() {
   papaVoid.display();
   ptrBoi.render();
   //stkBoi.render();
+=======
+  background(0);
+  //int ptrSection = map.getPlayerSection(ptrBoi.x, ptrBoi.y);
+  //image(ptrImg, map.translateX(ptrBoi), map.translateY(ptrBoi)); //mouseX, mouseY for mouse pos
+  //image(stkImg, stkBoi.x, stkBoi.y);
+  for (int i = 0; i < POINTER_AMOUNT; ++i) {
+    ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
+    pointers[i].display();
+  }
+  papaVoid.display();
+  ptrBoi.move();
+  stkBoi.move();
+>>>>>>> Stashed changes
    
 }
