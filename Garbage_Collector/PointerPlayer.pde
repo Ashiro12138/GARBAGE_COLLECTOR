@@ -32,6 +32,13 @@ class PointerPlayer extends Player {
     speed = maxSpeed - (int)(collectCount/2);
     speed = speed < 3 ? 3 : speed;
   }
+   
+  public void sacrificePointer() {
+    if (collectCount > 0) {
+      collectCount -= 1;
+      calcSpeed();
+    }  
+  }
   
   public void move(int direction) {
     switch (direction) {
