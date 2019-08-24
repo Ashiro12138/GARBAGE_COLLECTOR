@@ -123,6 +123,4 @@ void draw() {
     ptrBoi.render();
     //stkBoi.move();
   }
-   
->>>>>>> 1c170b8b0e0a25e8af3f20684f07797f7f35d483
 }
