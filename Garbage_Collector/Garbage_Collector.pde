@@ -4,7 +4,7 @@ import java.util.Date;
 
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
-PImage menuBg, zoomGif;
+PImage menuBg;
 PImage pointerOption, stackOption;
 int menuOption = 0; //0 is pointer, 1 is stack
 
@@ -18,6 +18,7 @@ StackPlayer stkBoi;
 Map map;
 Void papaVoid;
 Pointer[] pointers = new Pointer[POINTER_AMOUNT];
+Animation zoomGif;
 
 
 boolean gameStarted = false;
@@ -31,7 +32,7 @@ int SCREEN_Y = 600;
 
 void setup() {
   size(800, 600);
-  ptrImg = loadImage("pointer_ai.png");
+  ptrImg = loadImage("../Sprites/pointer_ai.png");
   stkImg = loadImage("stack_base.png");
   stkHit1 = loadImage("stack_hit1.png");
   stkHit2 = loadImage("stack_hit2.png"); 
@@ -44,7 +45,7 @@ void setup() {
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
-  zoomGif = loadImage("gameload.gif");
+  zoomGif = new Animation("../Sprites/MenuAnimation/menu_sprite", 51);
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   
@@ -125,7 +126,7 @@ void draw() {
         image(stackOption, 90, -20, 800 * 0.8, 600 * 0.8);
       }
     }  else { //use time-variable busy waiting
-      image(zoomGif, -50,0);
+      zoomGif.display(0, 0, 800, 600);
       Date now = new Date();
       println(now.getTime() - animationStart.getTime());
       if (now.getTime() - animationStart.getTime() > 1500) {
