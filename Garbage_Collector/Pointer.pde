@@ -1,14 +1,11 @@
 class Pointer{
   public int x, y;
   private int w = 17;
-  private int h = 17;
-  PImage 
+  private int h = 17; 
   
   Pointer() {
     this.x = (int)random(0, width * 2 - w);
     this.y = (int)random(0, height * 2 - h);
-    this.img
-
   }
   
   Pointer(int x, int y) {

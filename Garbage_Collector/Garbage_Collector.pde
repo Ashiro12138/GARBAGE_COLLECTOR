@@ -5,6 +5,11 @@ import java.util.Date;
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg;
 PImage menuBg;
+PImage eyeImg;
+PImage bombImg;
+PImage bootsImg;
+PImage heartImg;
+PImage greenPtr;
 PImage pointerOption, stackOption;
 int menuOption = 0; //0 is pointer, 1 is stack
 
@@ -40,6 +45,12 @@ void setup() {
   size(800, 600);
   ptrImg = loadImage("../Sprites/pointer_ai.png");
   stkImg = loadImage("stack_base.png");
+  greenPtr = loadImage("PowerUps/greenPointer.png");
+  eyeImg = loadImage("PowerUps/Eye.jpg");
+  bombImg = loadImage("PowerUps/Bomb.jpg");
+  bootsImg = loadImage("PowerUps/Boots.jpg");
+  //heartImg = loadImage("PowerUps/Heart.jpg");
+  
   //eyeImg = loadImage("") // TODO
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
@@ -54,6 +65,9 @@ void setup() {
   stkBoi = new StackPlayer();
   map = new Map();
 
+  //powerups
+  eye = new Eye();
+  
   papaVoid = new Void(width, height);
   for (int i = 0; i < POINTER_AMOUNT; ++i) {
     pointers[i] = new Pointer();
@@ -74,11 +88,12 @@ void keyPressed() {
       zoomAnimationPlaying = true;
       animationStart = new Date();
     }
-    if (keyCode == UP) {
-       menuOption = 0; 
-    } else if (keyCode == DOWN) {
-       menuOption = 1; 
-    }
+    //if (keyCode == UP) {
+    //   menuOption = 0; 
+    //} else if (keyCode == DOWN) {
+    //   menuOption = 1; 
+    //}
+    menuOption = 1;
   }
   
   if (key == CODED) {
@@ -145,6 +160,11 @@ void draw() {
     } else {
       ptrBoi.freeMove();
     }
+    // Check Powerups 
+    eye.update();
+    eye.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    
+    
     ptrBoi.render();
     ptrBoi.calcSpeed();
     //stkBoi.render();
