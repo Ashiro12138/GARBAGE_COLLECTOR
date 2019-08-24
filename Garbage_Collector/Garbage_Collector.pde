@@ -88,7 +88,7 @@ void draw() {
   //image(ptrImg, map.translateX(ptrBoi), map.translateY(ptrBoi)); //mouseX, mouseY for mouse pos
   //image(stkImg, stkBoi.x, stkBoi.y);
   for (int i = 0; i < POINTER_AMOUNT; ++i) {
-    pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
+    ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
     pointers[i].display();
   }
   papaVoid.display();

@@ -17,17 +17,13 @@ class Pointer{
     rect(x, y, w, h);
   }
   
-  public boolean collision(int playerX, int playerY, int playerWidth, int playerHeight) {
-    for (int y = this.y; y <= this.y+this.h; ++y) {
-      for(int x = this.x; x <= this.x+this.w; ++x) {
-        if (x >= playerX && x <= playerX + playerWidth &&
-            y >= playerY && y <= playerY + playerHeight) {
-          move();
-          return true;
-        }
-      }
+  public int collision(int playerX, int playerY, int playerWidth, int playerHeight) {
+    if(this.x+this.w > playerX && this.x < playerX+playerWidth && 
+        this.y+this.h > playerY && this.y < playerY+playerHeight){
+      move();
+      return 1;
     }
-    return false;
+    return 0;
   }
 
   
