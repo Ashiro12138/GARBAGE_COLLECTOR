@@ -32,6 +32,11 @@ class StackGame implements Game {
     }
     
     c.write("hello\n");
+    delay(10);
+    seed = millis();
+    randomSeed(seed);
+    c.write(str(seed)+"\n");
+    
     
    stackGameStarted = true;
    
@@ -52,9 +57,7 @@ class StackGame implements Game {
   over
   
   */
-  public void tick() {
-    
-    
+  public void tick() {   
     
     if (stkBoi.x != lastX || stkBoi.y != lastY) {
        c.write("pos,"+stkBoi.x+","+stkBoi.y+"\n"); 
@@ -66,8 +69,7 @@ class StackGame implements Game {
     
     //println("stkBoi section: " + map.getSectionByXY(stkBoi.x, stkBoi.y) + " ptrBoi section: " +  map.getSectionByXY(ptrBoi.x, ptrBoi.y));
     if (map.getSectionByXY(ptrBoi.x, ptrBoi.y) == map.getSectionByXY(stkBoi.x, stkBoi.y)) {
-       println("rendering ptrboi");
-        ptrBoi.render();
+      ptrBoi.render();
     }
       
     if (s.available() == null) {

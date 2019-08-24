@@ -3,24 +3,23 @@
 import java.util.Date;
 
 PImage ptrImg;  // Declare a variable of type PImage
-PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
+PImage stkImg;
 PImage menuBg;
 PImage pointerOption, stackOption;
-PImage serverWait, enterIP;
 int menuOption = 0; //0 is pointer, 1 is stack
+
 
 int POINTER_AMOUNT = 100;
 
 PFont font;
-int seed;
 
 PointerPlayer ptrBoi;
 StackPlayer stkBoi;
 Map map;
 Void papaVoid;
 Pointer[] pointers = new Pointer[POINTER_AMOUNT];
-Game game;
 Animation zoomGif;
+Animation stkHit;
 
 
 boolean gameStarted = false;
@@ -34,31 +33,25 @@ int SCREEN_Y = 600;
 
 void setup() {
   size(800, 600);
-  randomSeed(0);
-  ptrImg = loadImage("pointer_ai.png");
+  ptrImg = loadImage("../Sprites/pointer_ai.png");
   stkImg = loadImage("stack_base.png");
-  stkHit1 = loadImage("stack_hit1.png");
-  stkHit2 = loadImage("stack_hit2.png"); 
-  stkHit3 = loadImage("stack_hit3.png");
-  stkHit4 = loadImage("stack_hit4.png");
-  stkHit5 = loadImage("stack_hit5.png");
-  stkHit6 = loadImage("stack_hit6.png");
-  stkHit7 = loadImage("stack_hit7.png");
-  stkHit8 = loadImage("stack_hit8.png");
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
-  zoomGif = new Animation("MenuAnimation/menu_sprite", 51);
+  zoomGif = new Animation("MenuAnimation/menu_sprite", 51, "jpg");
+  stkHit = new Animation("stackHitAnimation/stack_hit", 8, "png");
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
-  serverWait = loadImage("server_wait.png");
-  enterIP = loadImage("enter_ip.png");
+  
   
   ptrBoi = new PointerPlayer();
   stkBoi = new StackPlayer();
   map = new Map();
 
   papaVoid = new Void(width, height);
+  for (int i = 0; i < POINTER_AMOUNT; ++i) {
+    pointers[i] = new Pointer();
+  }
 
   frameRate(30);
   background(0);
@@ -82,38 +75,18 @@ void keyPressed() {
     }
   }
   
-  if(menuOption==0){
-    if (key == CODED) {
-      if (keyCode == RIGHT) {
-        ptrBoi.moveX(10);
-      } else if (keyCode == LEFT) {
-        ptrBoi.moveX(-10);
-      } else if (keyCode == UP) {
-        ptrBoi.moveY(-10);
-      } else if (keyCode == DOWN) {
-        ptrBoi.moveY(10);
-      }
-       
-      //println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
-    }
-  } else {
+  if (key == CODED) {
+    if (keyCode == RIGHT || keyCode == LEFT || keyCode == UP || keyCode == DOWN) {
+      ptrBoi.move(keyCode);
+    } 
+     
+    //println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
+  }
     // stk movement (it's slower than ptr)
     key = Character.toLowerCase(key);
-    switch(key) {
-      case 'w':
-        stkBoi.moveY(-8);
-        break;
-      case 's':
-        stkBoi.moveY(8);
-        break;
-      case 'd':
-        stkBoi.moveX(8);// += 8;
-        break;
-      case 'a':
-        stkBoi.moveX(-8);// -= 8;  
-        break;
+    if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
+      stkBoi.move(key);
     }
-  }
     
 } 
 
@@ -129,46 +102,23 @@ void draw() {
       } else {
         image(stackOption, 90, -20, 800 * 0.8, 600 * 0.8);
       }
-
     }  else { //use time-variable busy waiting
-      //image(zoomGif, -50,0);
+      zoomGif.display(0, 0, 800, 600);
       Date now = new Date();
       println(now.getTime() - animationStart.getTime());
-      if (now.getTime() - animationStart.getTime() > 500) { //milliseconds time out to play animation
+      if (now.getTime() - animationStart.getTime() > 1500) {
         gameStarted = true;
-        if (menuOption == 0) { //pointer game
-          image(enterIP, 90, -20, 800 * 0.8, 600 * 0.8); 
-          game = new PointerGame(this);
-        } else if (menuOption == 1) {
-          image(menuBg, -50, 0);
-          image(serverWait, 90, -20, 800 * 0.8, 600 * 0.8);
-          game = new StackGame(this); 
-        }
-        for (int i = 0; i < POINTER_AMOUNT; ++i) {
-          pointers[i] = new Pointer();
-        }
       }
     }
     
   } else {
     background(0); //this is REDRAW
     int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
-    int stkSection = map.getSectionByXY(stkBoi.x, stkBoi.y);
     for (int i = 0; i < POINTER_AMOUNT; ++i) {
       ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
-      if (menuOption==0){
-        pointers[i].display(ptrSection);
-      } else {
-        pointers[i].display(stkSection);
-      }
-        
+      pointers[i].display(ptrSection);
     }
-    if (menuOption==0){
-      papaVoid.display(ptrSection);
-    } else {
-      papaVoid.display(stkSection);
-    }
-    
+    papaVoid.display(ptrSection);
     // I know this should be in a class, will do later
     if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 17, 17)) {
       ptrBoi.stashCount += ptrBoi.collectCount;
@@ -187,16 +137,13 @@ void draw() {
     } else {
       ptrBoi.freeMove();
     }
-    //ptrBoi.render();
 
-    //stkBoi.move();
+    ptrBoi.render();
+    ptrBoi.calcSpeed();
+    //stkBoi.render();
     text("Memory Stolen:", 10, 30);
     text(ptrBoi.collectCount, 195, 30);
     text("Memory Stashed:", 10, 60);
     text(ptrBoi.stashCount, 215, 60);
-    
-    //tick the game
-    game.tick();
-
   }
 }

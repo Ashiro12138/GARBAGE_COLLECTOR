@@ -5,7 +5,7 @@ class PointerGame implements Game {
     Client c;
     
     boolean pointerGameStarted = false;
-    int lastX, lastY;
+    int lastX, lastY, lastCollect, lastStash;
     
     public PointerGame(PApplet app) {
       
@@ -20,16 +20,28 @@ class PointerGame implements Game {
       println(hello);
       if (!hello.equals("hello\n")) {
         println("server handshake failed");
+        println(hello);
         exit();
       }
+      while (c.available() <= 0) {
+        //busy wait
+      }
+      String seed = c.readString().trim(); //readString() doesn't escape newline
+      randomSeed(int(seed));
+      
        
     }
   
     public void tick() {
       
-      
      if (ptrBoi.x != lastX || ptrBoi.y != lastY) {
-       c.write("pos,"+stkBoi.x+","+stkBoi.y+"\n"); 
+       c.write("pos,"+ptrBoi.x+","+ptrBoi.y+"\n"); 
+      }
+      if (ptrBoi.collectCount != lastCollect) {
+        c.write("collect,"+ptrBoi.collectCount+"\n");
+      }
+      if (ptrBoi.stashCount != lastStash) {
+        c.write("stash,"+ptrBoi.stashCount+"\n");
       }
     
     
@@ -37,6 +49,8 @@ class PointerGame implements Game {
       
       lastX = ptrBoi.x;
       lastY = ptrBoi.y;
+      lastCollect = ptrBoi.collectCount;
+      lastStash = ptrBoi.stashCount;
       
       //only render if they are in the same section
       if (map.getSectionByXY(stkBoi.x, stkBoi.y) == map.getSectionByXY(ptrBoi.x, ptrBoi.y)) {
