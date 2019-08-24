@@ -21,4 +21,20 @@ class PointerPlayer extends Player {
       initPosition();
   }
   
+
+  public void moveX(int x) {
+    int newX = this.x + x;
+    if (newX >= 0 && newX <= 1590) {
+       this.x += x; 
+    }
+  }
+  
+  public void moveY(int y) {
+    int newY = this.y + y;
+    if (newY >= 0 && newY <= 1190) {
+       this.y += y; 
+    }
+  }
+
+  
 }
