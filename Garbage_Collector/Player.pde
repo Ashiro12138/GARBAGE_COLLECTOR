@@ -1,5 +1,7 @@
 class Player {
    public int x,y;
+   public int maxSpeed;
+   public int speed;
    
    void initPosition() {
    }

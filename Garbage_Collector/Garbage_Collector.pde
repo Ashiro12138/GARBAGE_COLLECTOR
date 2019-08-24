@@ -3,7 +3,7 @@
 import java.util.Date;
 
 PImage ptrImg;  // Declare a variable of type PImage
-PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
+PImage stkImg;
 PImage menuBg;
 PImage pointerOption, stackOption;
 int menuOption = 0; //0 is pointer, 1 is stack
@@ -19,6 +19,7 @@ Map map;
 Void papaVoid;
 Pointer[] pointers = new Pointer[POINTER_AMOUNT];
 Animation zoomGif;
+Animation stkHit;
 
 
 boolean gameStarted = false;
@@ -34,18 +35,11 @@ void setup() {
   size(800, 600);
   ptrImg = loadImage("../Sprites/pointer_ai.png");
   stkImg = loadImage("stack_base.png");
-  stkHit1 = loadImage("stack_hit1.png");
-  stkHit2 = loadImage("stack_hit2.png"); 
-  stkHit3 = loadImage("stack_hit3.png");
-  stkHit4 = loadImage("stack_hit4.png");
-  stkHit5 = loadImage("stack_hit5.png");
-  stkHit6 = loadImage("stack_hit6.png");
-  stkHit7 = loadImage("stack_hit7.png");
-  stkHit8 = loadImage("stack_hit8.png");
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
-  zoomGif = new Animation("../Sprites/MenuAnimation/menu_sprite", 51);
+  zoomGif = new Animation("MenuAnimation/menu_sprite", 51);
+  stkHit = new Animation("stackHitAnimation/stack_hit", 8);
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   
@@ -82,15 +76,9 @@ void keyPressed() {
   }
   
   if (key == CODED) {
-    if (keyCode == RIGHT) {
-      ptrBoi.moveX(10);
-    } else if (keyCode == LEFT) {
-      ptrBoi.moveX(-10);
-    } else if (keyCode == UP) {
-      ptrBoi.moveY(-10);
-    } else if (keyCode == DOWN) {
-      ptrBoi.moveY(10);
-    }
+    if (keyCode == RIGHT || keyCode == LEFT || keyCode == UP || keyCode == DOWN) {
+      ptrBoi.move(keyCode);
+    } 
      
     //println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
   }
@@ -161,6 +149,7 @@ void draw() {
       ptrBoi.freeMove();
     }
     ptrBoi.render();
+    ptrBoi.calcSpeed();
     //stkBoi.move();
     text("Memory Stolen:", 10, 30);
     text(ptrBoi.collectCount, 195, 30);

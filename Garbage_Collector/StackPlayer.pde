@@ -21,5 +21,6 @@ class StackPlayer extends Player {
  //constructor
  public StackPlayer() {
    initPosition(); 
+   speed = 8;
  }
 }

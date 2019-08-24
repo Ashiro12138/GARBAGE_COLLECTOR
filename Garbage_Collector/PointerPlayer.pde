@@ -24,6 +24,30 @@ class PointerPlayer extends Player {
    
   public PointerPlayer() {
       initPosition();
+      maxSpeed = 10;
+      speed = maxSpeed;
+  }
+  
+  public void calcSpeed() {
+    speed = maxSpeed - (int)(collectCount/2);
+    speed = speed < 3 ? 3 : speed;
+  }
+  
+  public void move(int direction) {
+    switch (direction) {
+      case RIGHT:
+        moveX(speed);
+        break;
+      case LEFT:
+        moveX(-speed);
+        break;
+      case UP:
+        moveY(-speed);
+        break;
+      case DOWN:
+        moveY(speed);
+        break;
+    }
   }
   
 
