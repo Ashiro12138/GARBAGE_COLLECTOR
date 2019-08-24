@@ -44,7 +44,7 @@ void setup() {
   stkBoi = new StackPlayer();
   map = new Map();
 
-  papaVoid = new Void(width/2, height/2);
+  papaVoid = new Void(width, height);
   for (int i = 0; i < POINTER_AMOUNT; ++i) {
     pointers[i] = new Pointer();
   }
@@ -99,7 +99,6 @@ void keyPressed() {
 
 
 void draw() {
-  
   if (!gameStarted) {
     if (!zoomAnimationPlaying) {
     //draw main menu
@@ -115,23 +114,29 @@ void draw() {
     
   } else {
     background(0); //this is REDRAW
-    int section = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
-    for (int i = 0; i < POINTER_AMOUNT; ++i) {
-      ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
-      pointers[i].display(section);
-    }
-    papaVoid.display();
-    ptrBoi.render();
-    //stkBoi.render();
-    background(0);
     int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
     for (int i = 0; i < POINTER_AMOUNT; ++i) {
       ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
       pointers[i].display(ptrSection);
     }
-    papaVoid.display();
+    papaVoid.display(ptrSection);
+    // I know this should be in a class, will do later
+    if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 17, 17)) {
+      if (papaVoid.x < ptrBoi.x) {
+        ptrBoi.canLeft = false;
+      } else {
+        ptrBoi.canRight = false;
+      }
+      
+      if (papaVoid.y < ptrBoi.y) {
+        ptrBoi.canUp = false;
+      } else {
+        ptrBoi.canDown = false;
+      }
+    } else {
+      ptrBoi.freeMove();
+    }
     ptrBoi.render();
     //stkBoi.move();
   }
-   
 }
