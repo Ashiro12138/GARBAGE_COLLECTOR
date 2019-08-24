@@ -1,7 +1,9 @@
-// Pointer is client, stack player
+// Pointer is client, stack player is server
 
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
+PImage menuBg;
+
 
 int POINTER_AMOUNT = 100;
 
@@ -10,6 +12,8 @@ StackPlayer stkBoi;
 Map map;
 Void papaVoid;
 Pointer[] pointers = new Pointer[POINTER_AMOUNT];
+
+boolean gameStarted = false;
 
 //screen size CANNOT be a variable, this is used for map translations
 int SCREEN_X = 800;
@@ -28,6 +32,7 @@ void setup() {
   stkHit6 = loadImage("stack_hit6.png");
   stkHit7 = loadImage("stack_hit7.png");
   stkHit8 = loadImage("stack_hit8.png");
+  menuBg = loadImage("computer.png");
   
   ptrBoi = new PointerPlayer();
   stkBoi = new StackPlayer();
@@ -39,6 +44,7 @@ void setup() {
   }
 
   frameRate(30);
+  background(0);
 }
 
 /*
@@ -46,6 +52,11 @@ event call back that gets run once when a key is pressed.
 TODO: prevent starvation as one player holds down a key
 */
 void keyPressed() {
+  
+  if (!gameStarted) {
+    gameStarted = true;
+  }
+  
   if (key == CODED) {
     if (keyCode == RIGHT) {
       ptrBoi.moveX(10);
@@ -81,30 +92,37 @@ void keyPressed() {
 
 
 void draw() {
-  background(0);
-  int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
-  //image(ptrImg, map.translateX(ptrBoi), map.translateY(ptrBoi)); //mouseX, mouseY for mouse pos
-  //image(stkImg, stkBoi.x, stkBoi.y);
-  for (int i = 0; i < POINTER_AMOUNT; ++i) {
-    ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
-    pointers[i].display(ptrSection);
-  }
-  papaVoid.display(ptrSection);
-  if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 17, 17)) {
-    if (papaVoid.x < ptrBoi.x) {
-      ptrBoi.canLeft = false;
-    } else {
-      ptrBoi.canRight = false;
-    }
+  if (!gameStarted) {
+    //draw main menu
+    image(menuBg, -50, 0);
     
-    if (papaVoid.y < ptrBoi.y) {
-      ptrBoi.canUp = false;
-    } else {
-      ptrBoi.canDown = false;
-    }
   } else {
-    ptrBoi.freeMove();
+    background(0); //this is REDRAW
+    int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
+    for (int i = 0; i < POINTER_AMOUNT; ++i) {
+      ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
+      pointers[i].display(ptrSection);
+    }
+    papaVoid.display(ptrSection);
+    // I know this should be in a class, will do later
+    if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 17, 17)) {
+      if (papaVoid.x < ptrBoi.x) {
+        ptrBoi.canLeft = false;
+      } else {
+        ptrBoi.canRight = false;
+      }
+      
+      if (papaVoid.y < ptrBoi.y) {
+        ptrBoi.canUp = false;
+      } else {
+        ptrBoi.canDown = false;
+      }
+    } else {
+      ptrBoi.freeMove();
+    }
+    ptrBoi.render();
+    //stkBoi.move();
   }
-  ptrBoi.render();
-  //stkBoi.move();   
+   
+>>>>>>> 1c170b8b0e0a25e8af3f20684f07797f7f35d483
 }
