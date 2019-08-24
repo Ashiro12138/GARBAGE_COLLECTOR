@@ -38,8 +38,8 @@ void setup() {
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
-  zoomGif = new Animation("MenuAnimation/menu_sprite", 51, "jpg");
-  stkHit = new Animation("stackHitAnimation/stack_hit", 8, "png");
+  zoomGif = new Animation("MenuAnimation/menu_sprite", 51);
+  stkHit = new Animation("stackHitAnimation/stack_hit", 8);
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   
@@ -78,21 +78,30 @@ void keyPressed() {
   if (key == CODED) {
     if (keyCode == RIGHT || keyCode == LEFT || keyCode == UP || keyCode == DOWN) {
       ptrBoi.move(keyCode);
-    }
-  } else if (key == ' ') {
-    ptrBoi.sacrificePointer();
-  }
+    } 
      
-  //println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
-  // stk movement (it's slower than ptr)
-  key = Character.toLowerCase(key);
-  // stk movement (it's slower than ptr)
-  key = Character.toLowerCase(key);
-  if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
-    stkBoi.move(key);
+    //println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
   }
+    // stk movement (it's slower than ptr)
+    key = Character.toLowerCase(key);
+    switch(key) {
+      case 'w':
+        stkBoi.moveY(-8);
+        break;
+      case 's':
+        stkBoi.moveY(8);
+        break;
+      case 'd':
+        stkBoi.moveX(8);// += 8;
+        break;
+      case 'a':
+        stkBoi.moveX(-8);// -= 8;  
+        break;
+    }
     
 } 
+
+
 
 void draw() {
   if (!gameStarted) {
@@ -141,7 +150,7 @@ void draw() {
     }
     ptrBoi.render();
     ptrBoi.calcSpeed();
-    //stkBoi.render();
+    //stkBoi.move();
     text("Memory Stolen:", 10, 30);
     text(ptrBoi.collectCount, 195, 30);
     text("Memory Stashed:", 10, 60);
