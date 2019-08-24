@@ -55,21 +55,23 @@ class PointerGame implements Game {
         return;
       }
       String line = c.readString();
-      String[] data = split(line.replace("\n", ""), ",");
-     
-      String cmd = data[0]; 
+      String[] datas = split(line, "\n");
+      for (String new_data: datas){
+        String[] data = split(new_data, ",");
+        String cmd = data[0]; 
       
-      if (cmd.equals("pos")) {
-         stkBoi.x = int(data[1]);
-         stkBoi.y = int(data[2]);
-         println("stkBoi moved to: " , stkBoi.x, stkBoi.y);
-
-      } else if (cmd.equals("health")) {
-         stkBoi.health = int(data[1]);
-         stkBoi.setSkin();
-         println("stkBoi health set to: " , stkBoi.health);
-      } else if (cmd.equals("over")) {
-         //handle game over 
+        if (cmd.equals("pos")) {
+           stkBoi.x = int(data[1]);
+           stkBoi.y = int(data[2]);
+           println("stkBoi moved to: " , stkBoi.x, stkBoi.y);
+  
+        } else if (cmd.equals("health")) {
+           stkBoi.health = int(data[1]);
+           stkBoi.setSkin();
+           println("stkBoi health set to: " , stkBoi.health);
+        } else if (cmd.equals("over")) {
+           //handle game over 
+        }
       }
       
       

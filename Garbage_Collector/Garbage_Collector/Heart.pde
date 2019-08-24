@@ -16,7 +16,7 @@ class Heart extends Item {
     } else {
       stkBoi.health = 8;
     }
-    
+    stkBoi.setSkin();
     this.inPlayer = true;
   }
   
