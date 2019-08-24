@@ -33,7 +33,7 @@ void setup() {
   stkBoi = new StackPlayer();
   map = new Map();
 
-  papaVoid = new Void(width/2, height/2);
+  papaVoid = new Void(width, height);
   for (int i = 0; i < POINTER_AMOUNT; ++i) {
     pointers[i] = new Pointer();
   }
@@ -81,19 +81,6 @@ void keyPressed() {
 
 
 void draw() {
-  
-  background(0); //this is REDRAW
-  //int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
-  //image(ptrImg, map.translateX(ptrBoi), map.translateY(ptrBoi)); //mouseX, mouseY for mouse pos
-  //image(stkImg, stkBoi.x, stkBoi.y);
-  int section = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
-  for (int i = 0; i < POINTER_AMOUNT; ++i) {
-    ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
-    pointers[i].display(section);
-  }
-  papaVoid.display();
-  ptrBoi.render();
-  //stkBoi.render();
   background(0);
   int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
   //image(ptrImg, map.translateX(ptrBoi), map.translateY(ptrBoi)); //mouseX, mouseY for mouse pos
@@ -102,9 +89,21 @@ void draw() {
     ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
     pointers[i].display(ptrSection);
   }
-  papaVoid.display();
+  papaVoid.display(ptrSection);
   if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 17, 17)) {
-    println("Touched");
+    if (papaVoid.x < ptrBoi.x) {
+      ptrBoi.canLeft = false;
+    } else {
+      ptrBoi.canRight = false;
+    }
+    
+    if (papaVoid.y < ptrBoi.y) {
+      ptrBoi.canUp = false;
+    } else {
+      ptrBoi.canDown = false;
+    }
+  } else {
+    ptrBoi.freeMove();
   }
   ptrBoi.render();
   //stkBoi.move();   
