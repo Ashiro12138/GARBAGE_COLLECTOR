@@ -11,7 +11,7 @@ class Map {
           |
   
   */
-  public int getPlayerSection(int x, int y) {
+  public int getSectionByXY(int x, int y) {
      if (x <= 800 && y <= 600) {
        return 0;
      } else if (x > 800 && y < 600) {
@@ -26,24 +26,24 @@ class Map {
   /*
    * translate X coordinate of players into screen coordinates depending on section of map
    */
-  public int translateX(Player player) {
-     int section = getPlayerSection(player.x, player.y);
+  public int translateX(int section, int x) {
+     //int section = getSectionByXY(plx, player.y);
      //println("sec ", section);
      if (section % 2 == 1) { //if odd section (1 or 3), translate X, else do nothing
-         return player.x - 800;
+         return x - 800;
      } else {
-         return player.x;
+         return x;
      }
   
   }
   
-  public int translateY(Player player) {
-    int section = getPlayerSection(player.x, player.y);
+  public int translateY(int section, int y) {
+    //int section = getSectionByXY(player.x, player.y);
     //println("sec ", section);
      if (section > 1) { //translate Y for section 2 and 3 
-       return player.y - 600;
+       return y - 600;
      } else {
-       return player.y;
+       return y;
      }
   }
   

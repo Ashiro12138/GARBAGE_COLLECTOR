@@ -18,14 +18,14 @@ void setup() {
   size(800, 600);
   ptrImg = loadImage("pointer_ai.png");
   stkImg = loadImage("stack_base.png");
-  stkHit1 = loadImage("stack_base1.png");
-  stkHit2 = loadImage("stack_base2.png"); 
-  stkHit3 = loadImage("stack_base3.png");
-  stkHit4 = loadImage("stack_base4.png");
-  stkHit5 = loadImage("stack_base5.png");
-  stkHit6 = loadImage("stack_base6.png");
-  stkHit7 = loadImage("stack_base7.png");
-  stkHit8 = loadImage("stack_base8.png");
+  stkHit1 = loadImage("stack_hit1.png");
+  stkHit2 = loadImage("stack_hit2.png"); 
+  stkHit3 = loadImage("stack_hit3.png");
+  stkHit4 = loadImage("stack_hit4.png");
+  stkHit5 = loadImage("stack_hit5.png");
+  stkHit6 = loadImage("stack_hit6.png");
+  stkHit7 = loadImage("stack_hit7.png");
+  stkHit8 = loadImage("stack_hit8.png");
   
   ptrBoi = new PointerPlayer();
   stkBoi = new StackPlayer();
@@ -59,21 +59,17 @@ void keyPressed() {
     // stk movement (it's slower than ptr)
     key = Character.toLowerCase(key);
     switch(key) {
-      
-      
       case 'w':
-        if (ptrBoi.y - 10 >= 0) {
-          stkBoi.y -= 8;
-        }
+        stkBoi.moveY(-8);
         break;
       case 's':
-        stkBoi.y += 8;
+        stkBoi.moveY(8);
         break;
       case 'd':
-        stkBoi.x += 8;
+        stkBoi.moveX(8);// += 8;
         break;
       case 'a':
-        stkBoi.x -= 8;  
+        stkBoi.moveX(-8);// -= 8;  
         break;
     }
     
@@ -83,16 +79,17 @@ void keyPressed() {
 
 void draw() {
   
-  background(0);
-  //int ptrSection = map.getPlayerSection(ptrBoi.x, ptrBoi.y);
+  background(0); //this is REDRAW
+  //int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
   //image(ptrImg, map.translateX(ptrBoi), map.translateY(ptrBoi)); //mouseX, mouseY for mouse pos
   //image(stkImg, stkBoi.x, stkBoi.y);
+  int section = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
   for (int i = 0; i < POINTER_AMOUNT; ++i) {
     ptrBoi.collectCount += pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17);
-    pointers[i].display();
+    pointers[i].display(section);
   }
   papaVoid.display();
-  ptrBoi.move();
-  stkBoi.move();
+  ptrBoi.render();
+  //stkBoi.render();
    
 }

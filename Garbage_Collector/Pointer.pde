@@ -4,8 +4,8 @@ class Pointer{
   private int h = 17;
   
   Pointer() {
-    this.x = (int)random(0, width);
-    this.y = (int)random(0, height);
+    this.x = (int)random(0, width * 2 - w);
+    this.y = (int)random(0, height * 2 - h);
   }
   
   Pointer(int x, int y) {
@@ -13,8 +13,9 @@ class Pointer{
     this.y = y;
   }
   
-  public void display() {
-    rect(x, y, w, h);
+  public void display(int section) {
+    //rect(x, y, w, h);
+    image(ptrImg, map.translateX(section,x) , map.translateY(section, y)); 
   }
   
   public int collision(int playerX, int playerY, int playerWidth, int playerHeight) {
