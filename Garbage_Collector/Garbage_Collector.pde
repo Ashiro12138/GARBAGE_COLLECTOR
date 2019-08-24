@@ -6,8 +6,8 @@ PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
 PImage menuBg, zoomGif;
 PImage pointerOption, stackOption;
+PImage serverWait;
 int menuOption = 0; //0 is pointer, 1 is stack
-
 
 int POINTER_AMOUNT = 100;
 
@@ -16,7 +16,7 @@ StackPlayer stkBoi;
 Map map;
 Void papaVoid;
 Pointer[] pointers = new Pointer[POINTER_AMOUNT];
-
+Game game;
 
 boolean gameStarted = false;
 boolean zoomAnimationPlaying = false;
@@ -43,6 +43,7 @@ void setup() {
   zoomGif = loadImage("gameload.gif");
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
+  serverWait = loadImage("server_wait.png");
   
   
   ptrBoi = new PointerPlayer();
@@ -126,6 +127,11 @@ void draw() {
       println(now.getTime() - animationStart.getTime());
       if (now.getTime() - animationStart.getTime() > 1500) {
         gameStarted = true;
+        if (menuOption == 0) { //pointer game
+          
+        } else if (menuOption == 1) {
+          game = new StackGame(this);
+        }
       }
     }
     
@@ -154,6 +160,6 @@ void draw() {
       ptrBoi.freeMove();
     }
     ptrBoi.render();
-    //stkBoi.move();
+    //stkBoi.render();
   }
 }
