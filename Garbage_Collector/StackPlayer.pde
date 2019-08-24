@@ -86,4 +86,11 @@ class StackPlayer extends Player {
        }
       return 0;
      }
+  void setSpeed(int speed) {
+    this.speed = speed;
+  }
+  
+  int getSpeed() {
+    return this.speed;
+  }
 }

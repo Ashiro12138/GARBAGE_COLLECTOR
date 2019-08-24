@@ -1,12 +1,17 @@
 class Item { 
   public int timeLeft = 900;
   public int x,y;
-  private int chance = 3; // The upper bound for the chance.  1million = 0.01% chance per second of spawning
-  private int duration = 900; // duration = numSecs * 30
+  public int chance = 1000; // The upper bound for the chance.  1million = 0.01% chance per second of spawning
+  public int duration = 900; // duration = numSecs * 30
   public boolean inGame = true;
   public boolean inPlayer = false;
-  protected int w = 17;
-  protected int h = 17;
+  public int w = 17;
+  public int h = 17;
+  
+  public void initPos() {
+    this.x = (int)random(0, width / 2);
+    this.y = (int)random(0, height / 2);
+  }
   
   public void chanceSpawn() {
     if (itemsInGame < 2 && !inGame) {
@@ -50,7 +55,8 @@ class Item {
   
   public void checkCollision(int playerX, int playerY, int playerWidth, int playerHeight) {
     if(this.x+this.w > playerX && this.x < playerX+playerWidth && 
-        this.y+this.h > playerY && this.y < playerY+playerHeight){
+        this.y+this.h > playerY && this.y < playerY+playerHeight) {
+      itemsInGame--;
       addEffects();
       this.inGame = false;
     }

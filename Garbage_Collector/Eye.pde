@@ -1,6 +1,7 @@
-class Eye extends Item { 
-  public int duration;
-    
+class Eye extends Item {   
+  public Eye() {
+    this.chance = 1000;
+  }
   @Override
   public void reset() {
     ptrBoi.changeImg(ptrImg);

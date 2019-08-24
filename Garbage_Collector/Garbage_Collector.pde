@@ -29,6 +29,7 @@ Animation stkHit;
 // Power ups
 int itemsInGame = 0;
 Eye eye;
+Boots boots;
 
 
 boolean gameStarted = false;
@@ -49,7 +50,7 @@ void setup() {
   eyeImg = loadImage("PowerUps/Eye.jpg");
   bombImg = loadImage("PowerUps/Bomb.jpg");
   bootsImg = loadImage("PowerUps/Boots.jpg");
-  //heartImg = loadImage("PowerUps/Heart.jpg");
+  heartImg = loadImage("../Sprites/Heart.jpg");
   
   //eyeImg = loadImage("") // TODO
   menuBg = loadImage("computer.png");
@@ -67,6 +68,9 @@ void setup() {
 
   //powerups
   eye = new Eye();
+  eye.initPos();
+  boots = new Boots();
+  boots.initPos();
   
   papaVoid = new Void(width, height);
   for (int i = 0; i < POINTER_AMOUNT; ++i) {
@@ -170,6 +174,8 @@ void draw() {
     // Check Powerups 
     eye.update();
     eye.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    boots.update();
+    boots.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
     
     
     ptrBoi.render();
