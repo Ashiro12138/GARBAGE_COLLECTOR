@@ -1,3 +1,5 @@
+// Pointer is client, stack player
+
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
 
@@ -54,7 +56,7 @@ void keyPressed() {
       ptrBoi.moveY(10);
     }
      
-    println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
+    //println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
   }
     // stk movement (it's slower than ptr)
     key = Character.toLowerCase(key);
