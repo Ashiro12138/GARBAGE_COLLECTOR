@@ -4,7 +4,7 @@ import java.util.Date;
 
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
-PImage menuBg, zoomGif;
+PImage menuBg;
 PImage pointerOption, stackOption;
 PImage serverWait;
 int menuOption = 0; //0 is pointer, 1 is stack
@@ -19,6 +19,8 @@ Map map;
 Void papaVoid;
 Pointer[] pointers = new Pointer[POINTER_AMOUNT];
 Game game;
+Animation zoomGif;
+
 
 boolean gameStarted = false;
 boolean zoomAnimationPlaying = false;
@@ -31,7 +33,7 @@ int SCREEN_Y = 600;
 
 void setup() {
   size(800, 600);
-  ptrImg = loadImage("pointer_ai.png");
+  ptrImg = loadImage("../Sprites/pointer_ai.png");
   stkImg = loadImage("stack_base.png");
   stkHit1 = loadImage("stack_hit1.png");
   stkHit2 = loadImage("stack_hit2.png"); 
@@ -44,7 +46,7 @@ void setup() {
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
-  zoomGif = loadImage("gameload.gif");
+  zoomGif = new Animation("../Sprites/MenuAnimation/menu_sprite", 51);
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   serverWait = loadImage("server_wait.png");
