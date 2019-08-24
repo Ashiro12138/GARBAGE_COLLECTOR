@@ -5,6 +5,8 @@ import java.util.Date;
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
 PImage menuBg, zoomGif;
+PImage pointerOption, stackOption;
+int menuOption = 0; //0 is pointer, 1 is stack
 
 
 int POINTER_AMOUNT = 100;
@@ -43,6 +45,9 @@ void setup() {
   font = createFont("COMIC.TTF", 24);
   textFont(font);
   zoomGif = loadImage("gameload.gif");
+  pointerOption = loadImage("option_pointer.png");
+  stackOption = loadImage("option_stack.png");
+  
   
   ptrBoi = new PointerPlayer();
   stkBoi = new StackPlayer();
@@ -64,8 +69,15 @@ TODO: prevent starvation as one player holds down a key
 void keyPressed() {
   
   if (!gameStarted) {
-    zoomAnimationPlaying = true;
-    animationStart = new Date();
+    if (keyCode == ENTER) {
+      zoomAnimationPlaying = true;
+      animationStart = new Date();
+    }
+    if (keyCode == UP) {
+       menuOption = 0; 
+    } else if (keyCode == DOWN) {
+       menuOption = 1; 
+    }
   }
   
   if (key == CODED) {
@@ -107,11 +119,16 @@ void draw() {
     if (!zoomAnimationPlaying) {
       //draw main menu
       image(menuBg, -50, 0);
+      if (menuOption == 0) {
+        image(pointerOption, 90, -20, 800 * 0.8, 600 * 0.8);
+      } else {
+        image(stackOption, 90, -20, 800 * 0.8, 600 * 0.8);
+      }
     }  else { //use time-variable busy waiting
       image(zoomGif, -50,0);
       Date now = new Date();
       println(now.getTime() - animationStart.getTime());
-      if (now.getTime() - animationStart.getTime() > 2000) {
+      if (now.getTime() - animationStart.getTime() > 1500) {
         gameStarted = true;
       }
     }
