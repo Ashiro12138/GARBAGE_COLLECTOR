@@ -11,6 +11,8 @@ int menuOption = 0; //0 is pointer, 1 is stack
 
 int POINTER_AMOUNT = 100;
 
+PFont font;
+
 PointerPlayer ptrBoi;
 StackPlayer stkBoi;
 Map map;
@@ -40,6 +42,8 @@ void setup() {
   stkHit7 = loadImage("stack_hit7.png");
   stkHit8 = loadImage("stack_hit8.png");
   menuBg = loadImage("computer.png");
+  font = createFont("COMIC.TTF", 24);
+  textFont(font);
   zoomGif = loadImage("gameload.gif");
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
@@ -121,6 +125,7 @@ void draw() {
       } else {
         image(stackOption, 90, -20, 800 * 0.8, 600 * 0.8);
       }
+
     }  else { //use time-variable busy waiting
       image(zoomGif, -50,0);
       Date now = new Date();
@@ -145,6 +150,8 @@ void draw() {
     papaVoid.display(ptrSection);
     // I know this should be in a class, will do later
     if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 17, 17)) {
+      ptrBoi.stashCount += ptrBoi.collectCount;
+      ptrBoi.collectCount = 0;
       if (papaVoid.x < ptrBoi.x) {
         ptrBoi.canLeft = false;
       } else {
@@ -160,6 +167,12 @@ void draw() {
       ptrBoi.freeMove();
     }
     ptrBoi.render();
-    //stkBoi.render();
+
+    //stkBoi.move();
+    text("Memory Stolen:", 10, 30);
+    text(ptrBoi.collectCount, 195, 30);
+    text("Memory Stashed:", 10, 60);
+    text(ptrBoi.stashCount, 215, 60);
+
   }
 }
