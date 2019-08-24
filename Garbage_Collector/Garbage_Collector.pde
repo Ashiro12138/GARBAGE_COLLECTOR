@@ -127,15 +127,18 @@ void draw() {
       }
 
     }  else { //use time-variable busy waiting
-      image(zoomGif, -50,0);
+      //image(zoomGif, -50,0);
       Date now = new Date();
       println(now.getTime() - animationStart.getTime());
-      if (now.getTime() - animationStart.getTime() > 1500) {
+      if (now.getTime() - animationStart.getTime() > 500) { //milliseconds time out to play animation
         gameStarted = true;
         if (menuOption == 0) { //pointer game
-          
+          game = new PointerGame(this);
         } else if (menuOption == 1) {
+          image(menuBg, -50, 0);
+          image(serverWait, 90, -20, 800 * 0.8, 600 * 0.8);
           game = new StackGame(this);
+          
         }
       }
     }
@@ -173,6 +176,9 @@ void draw() {
     text(ptrBoi.collectCount, 195, 30);
     text("Memory Stashed:", 10, 60);
     text(ptrBoi.stashCount, 215, 60);
+    
+    //tick the game
+    game.tick();
 
   }
 }
