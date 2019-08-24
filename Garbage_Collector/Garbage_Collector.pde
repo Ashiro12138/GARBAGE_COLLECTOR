@@ -6,7 +6,7 @@ PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
 PImage menuBg;
 PImage pointerOption, stackOption;
-PImage serverWait;
+PImage serverWait, enterIP;
 int menuOption = 0; //0 is pointer, 1 is stack
 
 int POINTER_AMOUNT = 100;
@@ -50,7 +50,7 @@ void setup() {
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   serverWait = loadImage("server_wait.png");
-  
+  enterIP = loadImage("enter_ip.png");
   
   ptrBoi = new PointerPlayer();
   stkBoi = new StackPlayer();
@@ -135,6 +135,7 @@ void draw() {
       if (now.getTime() - animationStart.getTime() > 500) { //milliseconds time out to play animation
         gameStarted = true;
         if (menuOption == 0) { //pointer game
+          image(enterIP, 90, -20, 800 * 0.8, 600 * 0.8); 
           game = new PointerGame(this);
         } else if (menuOption == 1) {
           image(menuBg, -50, 0);
@@ -171,7 +172,7 @@ void draw() {
     } else {
       ptrBoi.freeMove();
     }
-    ptrBoi.render();
+    //ptrBoi.render();
 
     //stkBoi.move();
     text("Memory Stolen:", 10, 30);

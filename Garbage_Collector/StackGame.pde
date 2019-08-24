@@ -6,6 +6,8 @@ class StackGame implements Game {
   Server s;
   Client c;
   
+  int lastX, lastY;
+  
   boolean stackGameStarted = false;
   
   public StackGame(PApplet app) {
@@ -29,6 +31,8 @@ class StackGame implements Game {
       exit();
     }
     
+    c.write("hello\n");
+    
    stackGameStarted = true;
    
     
@@ -50,11 +54,22 @@ class StackGame implements Game {
   */
   public void tick() {
     
-    if (!stackGameStarted) {
-       return;
-    }
-    stkBoi.render();
     
+    
+    if (stkBoi.x != lastX || stkBoi.y != lastY) {
+       c.write("pos,"+stkBoi.x+","+stkBoi.y+"\n"); 
+    }
+    
+    stkBoi.render();
+    lastX = stkBoi.x;
+    lastY = stkBoi.y;
+    
+    //println("stkBoi section: " + map.getSectionByXY(stkBoi.x, stkBoi.y) + " ptrBoi section: " +  map.getSectionByXY(ptrBoi.x, ptrBoi.y));
+    if (map.getSectionByXY(ptrBoi.x, ptrBoi.y) == map.getSectionByXY(stkBoi.x, stkBoi.y)) {
+       println("rendering ptrboi");
+        ptrBoi.render();
+    }
+      
     if (s.available() == null) {
       return;
     }
@@ -75,7 +90,6 @@ class StackGame implements Game {
     } else if (cmd.equals("over")) {
        //handle game over 
     }
-    ptrBoi.render();
   }
   
   
