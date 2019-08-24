@@ -39,25 +39,7 @@ class PointerPlayer extends Player {
       calcSpeed();
     }  
   }
-  
-  public void move(int direction) {
-    switch (direction) {
-      case RIGHT:
-        moveX(speed);
-        break;
-      case LEFT:
-        moveX(-speed);
-        break;
-      case UP:
-        moveY(-speed);
-        break;
-      case DOWN:
-        moveY(speed);
-        break;
-    }
-  }
-  
-
+ 
   public void moveX(int x) {
     if (x > 0 && canRight || x < 0 && canLeft) {
       int newX = this.x + x;
@@ -81,5 +63,10 @@ class PointerPlayer extends Player {
     canRight = true;
     canUp = true;
     canDown = true;
+  }
+  
+  public void die() {
+   //Show Game Over and die
+   println("I killed you lol");
   }
 }

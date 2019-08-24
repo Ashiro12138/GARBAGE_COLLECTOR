@@ -34,6 +34,23 @@ class Player {
          int section = map.getSectionByXY(this.x, this.y);
          image(this.getSkin(), map.translateX(section, x), map.translateY(section, y));
    }
+   
+   public void move(int direction) {
+    switch (direction) {
+      case RIGHT:
+        moveX(speed);
+        break;
+      case LEFT:
+        moveX(-speed);
+        break;
+      case UP:
+        moveY(-speed);
+        break;
+      case DOWN:
+        moveY(speed);
+        break;
+    }
+  }
 
    
    

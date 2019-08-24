@@ -23,7 +23,7 @@ class Pointer{
   
   public int collision(int playerX, int playerY, int playerWidth, int playerHeight) {
     if(this.x+this.w > playerX && this.x < playerX+playerWidth && 
-        this.y+this.h > playerY && this.y < playerY+playerHeight){
+        this.y+this.h > playerY && this.y < playerY+playerHeight) {
       teleport();
       return 1;
     }

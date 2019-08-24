@@ -88,20 +88,27 @@ void keyPressed() {
       zoomAnimationPlaying = true;
       animationStart = new Date();
     }
-    //if (keyCode == UP) {
-    //   menuOption = 0; 
-    //} else if (keyCode == DOWN) {
-    //   menuOption = 1; 
-    //}
-    menuOption = 1;
+    if (keyCode == UP) {
+       menuOption = 0; 
+    } else if (keyCode == DOWN) {
+       menuOption = 1; 
+    }
+    //this.menuOption = 1;
   }
   
   if (key == CODED) {
     if (keyCode == RIGHT || keyCode == LEFT || keyCode == UP || keyCode == DOWN) {
-      ptrBoi.move(keyCode);
+      if (menuOption == 1) {
+        stkBoi.move(keyCode);
+      } else {
+         ptrBoi.move(keyCode);
+      }
+      
     }
-  } else if (key == ' ') {
-    ptrBoi.sacrificePointer();
+  } else if (key == ' ' && menuOption == 1) {
+    stkBoi.attackPointer();
+  } else if(key == ' ') {
+   ptrBoi.sacrificePointer(); 
   }
      
   //println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
@@ -167,7 +174,7 @@ void draw() {
     
     ptrBoi.render();
     ptrBoi.calcSpeed();
-    //stkBoi.render();
+    stkBoi.render();
     text("Memory Stolen:", 10, 30);
     text(ptrBoi.collectCount, 195, 30);
     text("Memory Stashed:", 10, 60);
