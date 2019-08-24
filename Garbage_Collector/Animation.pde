@@ -3,13 +3,13 @@ class Animation {
   int imageCount;
   int frame;
   
-  Animation(String imagePrefix, int count, String end) {
+  Animation(String imagePrefix, int count) {
     imageCount = count;
     images = new PImage[imageCount];
 
     for (int i = 0; i < imageCount; i++) {
       // Use nf() to number format 'i' into four digits
-      String filename = imagePrefix + (i+1) + "." + end;
+      String filename = imagePrefix + (i+1) + ".png";
       images[i] = loadImage(filename);
     }
   }
