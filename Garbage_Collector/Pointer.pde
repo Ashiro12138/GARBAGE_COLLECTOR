@@ -3,11 +3,9 @@ class Pointer{
   private int w = 17;
   private int h = 17;
   public boolean collected = false;
-    
   Pointer() {
     this.x = (int)random(0, width * 2 - w);
     this.y = (int)random(0, height * 2 - h);
-
   }
   
   Pointer(int x, int y) {
