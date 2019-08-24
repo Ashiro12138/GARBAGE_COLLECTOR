@@ -30,6 +30,8 @@ Animation stkHit;
 int itemsInGame = 0;
 Eye eye;
 Boots boots;
+Bomb bomb;
+Heart heart;
 
 
 boolean gameStarted = false;
@@ -71,6 +73,10 @@ void setup() {
   eye.initPos();
   boots = new Boots();
   boots.initPos();
+  heart = new Heart();
+  heart.initPos();
+  bomb = new Bomb();
+  bomb.initPos();  
   
   papaVoid = new Void(width, height);
   for (int i = 0; i < POINTER_AMOUNT; ++i) {
@@ -176,6 +182,10 @@ void draw() {
     eye.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
     boots.update();
     boots.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    bomb.update();
+    bomb.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    heart.update();
+    heart.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
     
     
     ptrBoi.render();
