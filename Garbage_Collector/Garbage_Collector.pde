@@ -7,6 +7,8 @@ PImage menuBg;
 
 int POINTER_AMOUNT = 100;
 
+PFont font;
+
 PointerPlayer ptrBoi;
 StackPlayer stkBoi;
 Map map;
@@ -33,6 +35,8 @@ void setup() {
   stkHit7 = loadImage("stack_hit7.png");
   stkHit8 = loadImage("stack_hit8.png");
   menuBg = loadImage("computer.png");
+  font = createFont("COMIC.TTF", 24);
+  textFont(font);
   
   ptrBoi = new PointerPlayer();
   stkBoi = new StackPlayer();
@@ -106,6 +110,8 @@ void draw() {
     papaVoid.display(ptrSection);
     // I know this should be in a class, will do later
     if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 17, 17)) {
+      ptrBoi.stashCount += ptrBoi.collectCount;
+      ptrBoi.collectCount = 0;
       if (papaVoid.x < ptrBoi.x) {
         ptrBoi.canLeft = false;
       } else {
@@ -122,5 +128,9 @@ void draw() {
     }
     ptrBoi.render();
     //stkBoi.move();
+    text("Memory Stolen:", 10, 30);
+    text(ptrBoi.collectCount, 195, 30);
+    text("Memory Stashed:", 10, 60);
+    text(ptrBoi.stashCount, 215, 60);
   }
 }
