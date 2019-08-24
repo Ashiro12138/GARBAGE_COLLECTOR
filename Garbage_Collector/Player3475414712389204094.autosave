@@ -2,7 +2,6 @@ class Player {
    public int x,y;
    public int maxSpeed;
    public int speed;
-   private PImage playerImg = ptrImg;
    
    void initPosition() {
    }
@@ -21,11 +20,9 @@ class Player {
     }
   }
   
-  public void changeImg(PImage newImg) {
-    this.playerImg = newImg;
-  }
+   
    PImage getSkin() {
-     return this.playerImg;
+     return ptrImg;
    }
    
    /* renders player on the screen */

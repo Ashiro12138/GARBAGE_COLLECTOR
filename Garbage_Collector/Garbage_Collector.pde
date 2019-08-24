@@ -21,6 +21,10 @@ Pointer[] pointers = new Pointer[POINTER_AMOUNT];
 Animation zoomGif;
 Animation stkHit;
 
+// Power ups
+int itemsInGame = 0;
+Eye eye;
+
 
 boolean gameStarted = false;
 boolean zoomAnimationPlaying = false;
@@ -31,10 +35,12 @@ int SCREEN_X = 800;
 int SCREEN_Y = 600;
 
 
+
 void setup() {
   size(800, 600);
   ptrImg = loadImage("../Sprites/pointer_ai.png");
   stkImg = loadImage("stack_base.png");
+  //eyeImg = loadImage("") // TODO
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
