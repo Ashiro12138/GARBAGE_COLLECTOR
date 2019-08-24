@@ -24,9 +24,22 @@ class PointerPlayer extends Player {
    
   public PointerPlayer() {
       initPosition();
+      maxSpeed = 10;
+      speed = maxSpeed;
   }
   
-
+  public void calcSpeed() {
+    speed = maxSpeed - (int)(collectCount/2);
+    speed = speed < 3 ? 3 : speed;
+  }
+   
+  public void sacrificePointer() {
+    if (collectCount > 0) {
+      collectCount -= 1;
+      calcSpeed();
+    }  
+  }
+ 
   public void moveX(int x) {
     if (x > 0 && canRight || x < 0 && canLeft) {
       int newX = this.x + x;
@@ -50,5 +63,10 @@ class PointerPlayer extends Player {
     canRight = true;
     canUp = true;
     canDown = true;
+  }
+  
+  public void die() {
+   //Show Game Over and die
+   println("I killed you lol");
   }
 }

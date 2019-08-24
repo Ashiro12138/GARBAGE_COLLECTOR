@@ -1,5 +1,8 @@
 class Player {
    public int x,y;
+   public int maxSpeed;
+   public int speed;
+   private PImage playerImg = ptrImg;
    
    void initPosition() {
    }
@@ -18,9 +21,11 @@ class Player {
     }
   }
   
-   
+  public void changeImg(PImage newImg) {
+    this.playerImg = newImg;
+  }
    PImage getSkin() {
-     return ptrImg;
+     return this.playerImg;
    }
    
    /* renders player on the screen */
@@ -29,6 +34,23 @@ class Player {
          int section = map.getSectionByXY(this.x, this.y);
          image(this.getSkin(), map.translateX(section, x), map.translateY(section, y));
    }
+   
+   public void move(int direction) {
+    switch (direction) {
+      case RIGHT:
+        moveX(speed);
+        break;
+      case LEFT:
+        moveX(-speed);
+        break;
+      case UP:
+        moveY(-speed);
+        break;
+      case DOWN:
+        moveY(speed);
+        break;
+    }
+  }
 
    
    

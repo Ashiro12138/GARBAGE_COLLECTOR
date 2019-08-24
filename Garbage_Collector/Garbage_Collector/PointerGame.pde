@@ -64,6 +64,10 @@ class PointerGame implements Game {
          stkBoi.y = int(data[2]);
          println("stkBoi moved to: " , stkBoi.x, stkBoi.y);
 
+      } else if (cmd.equals("health")) {
+         stkBoi.health = int(data[1]);
+         stkBoi.setSkin();
+         println("stkBoi health set to: " , stkBoi.health);
       } else if (cmd.equals("over")) {
          //handle game over 
       }

@@ -3,8 +3,13 @@
 import java.util.Date;
 
 PImage ptrImg;  // Declare a variable of type PImage
-PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
+PImage stkImg;
 PImage menuBg;
+PImage eyeImg;
+PImage bombImg;
+PImage bootsImg;
+PImage heartImg;
+PImage greenPtr;
 PImage pointerOption, stackOption;
 PImage serverWait, enterIP;
 int menuOption = 0; //0 is pointer, 1 is stack
@@ -21,7 +26,14 @@ Void papaVoid;
 Pointer[] pointers = new Pointer[POINTER_AMOUNT];
 Game game;
 Animation zoomGif;
+Animation stkHit;
 
+// Power ups
+int itemsInGame = 0;
+Eye eye;
+Boots boots;
+Bomb bomb;
+Heart heart;
 
 boolean gameStarted = false;
 boolean zoomAnimationPlaying = false;
@@ -36,18 +48,17 @@ void setup() {
   size(800, 600);
   ptrImg = loadImage("pointer_ai.png");
   stkImg = loadImage("stack_base.png");
-  stkHit1 = loadImage("stack_hit1.png");
-  stkHit2 = loadImage("stack_hit2.png"); 
-  stkHit3 = loadImage("stack_hit3.png");
-  stkHit4 = loadImage("stack_hit4.png");
-  stkHit5 = loadImage("stack_hit5.png");
-  stkHit6 = loadImage("stack_hit6.png");
-  stkHit7 = loadImage("stack_hit7.png");
-  stkHit8 = loadImage("stack_hit8.png");
+  greenPtr = loadImage("PowerUps/greenPointer.png");
+  eyeImg = loadImage("PowerUps/Eye.jpg");
+  bombImg = loadImage("PowerUps/Bomb.jpg");
+  bootsImg = loadImage("PowerUps/Boots.jpg");
+  heartImg = loadImage("PowerUps/Heart.jpg");
+  
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
-  zoomGif = new Animation("MenuAnimation/menu_sprite", 51);
+  zoomGif = new Animation("MenuAnimation/menu_sprite", 51, "jpg");
+  stkHit = new Animation("stackHitAnimation/stack_hit", 8, "png");
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   serverWait = loadImage("server_wait.png");
@@ -56,6 +67,13 @@ void setup() {
   ptrBoi = new PointerPlayer();
   stkBoi = new StackPlayer();
   map = new Map();
+  
+  //powerups
+  eye = new Eye();
+  boots = new Boots();
+  heart = new Heart();
+  bomb = new Bomb();
+  
 
   papaVoid = new Void(width, height);
 
@@ -81,37 +99,19 @@ void keyPressed() {
     }
   }
   
-  if(menuOption==0){
-    if (key == CODED) {
-      if (keyCode == RIGHT) {
-        ptrBoi.moveX(10);
-      } else if (keyCode == LEFT) {
-        ptrBoi.moveX(-10);
-      } else if (keyCode == UP) {
-        ptrBoi.moveY(-10);
-      } else if (keyCode == DOWN) {
-        ptrBoi.moveY(10);
+  if (key == CODED) {
+    if (keyCode == RIGHT || keyCode == LEFT || keyCode == UP || keyCode == DOWN) {
+      if (menuOption == 1) {
+        stkBoi.move(keyCode);
+      } else {
+         ptrBoi.move(keyCode);
       }
-       
-      //println("ptrPos: " + ptrBoi.x + ":" + ptrBoi.y);
+      
     }
-  } else {
-    // stk movement (it's slower than ptr)
-    key = Character.toLowerCase(key);
-    switch(key) {
-      case 'w':
-        stkBoi.moveY(-8);
-        break;
-      case 's':
-        stkBoi.moveY(8);
-        break;
-      case 'd':
-        stkBoi.moveX(8);// += 8;
-        break;
-      case 'a':
-        stkBoi.moveX(-8);// -= 8;  
-        break;
-    }
+  } else if (key == ' ' && menuOption == 1) {
+    stkBoi.attackPointer();
+  } else if(key == ' ') {
+   ptrBoi.sacrificePointer(); 
   }
     
 } 
@@ -146,6 +146,10 @@ void draw() {
         for (int i = 0; i < POINTER_AMOUNT; ++i) {
           pointers[i] = new Pointer();
         }
+        eye.initPos();
+        boots.initPos();
+        heart.initPos();
+        bomb.initPos(); 
       }
     }
     
@@ -193,9 +197,17 @@ void draw() {
     } else {
       ptrBoi.freeMove();
     }
-    //ptrBoi.render();
+    
+    // Check Powerups 
+    eye.update();
+    eye.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    boots.update();
+    boots.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    bomb.update();
+    bomb.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    heart.update();
+    heart.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
 
-    //stkBoi.move();
     text("Memory Stolen:", 10, 30);
     text(ptrBoi.collectCount, 195, 30);
     text("Memory Stashed:", 10, 60);

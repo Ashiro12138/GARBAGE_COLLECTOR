@@ -6,7 +6,7 @@ class StackGame implements Game {
   Server s;
   Client c;
   
-  int lastX, lastY;
+  int lastX, lastY, lastHealth;
   
   boolean stackGameStarted = false;
   
@@ -60,12 +60,17 @@ class StackGame implements Game {
   public void tick() {   
     
     if (stkBoi.x != lastX || stkBoi.y != lastY) {
-       c.write("pos,"+stkBoi.x+","+stkBoi.y+"\n"); 
+      c.write("pos,"+stkBoi.x+","+stkBoi.y+"\n"); 
+    }
+    if (stkBoi.health !=  lastHealth) {
+      c.write("health,"+stkBoi.health+"\n");
     }
     
     stkBoi.render();
     lastX = stkBoi.x;
     lastY = stkBoi.y;
+    lastHealth = stkBoi.health;
+    
     
     //println("stkBoi section: " + map.getSectionByXY(stkBoi.x, stkBoi.y) + " ptrBoi section: " +  map.getSectionByXY(ptrBoi.x, ptrBoi.y));
     if (map.getSectionByXY(ptrBoi.x, ptrBoi.y) == map.getSectionByXY(stkBoi.x, stkBoi.y)) {
