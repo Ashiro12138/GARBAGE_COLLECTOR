@@ -1,8 +1,10 @@
 // Pointer is client, stack player is server
 
+import java.util.Date;
+
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg, stkHit1, stkHit2,stkHit3,stkHit4,stkHit5,stkHit6,stkHit7,stkHit8;
-PImage menuBg;
+PImage menuBg, zoomGif;
 
 
 int POINTER_AMOUNT = 100;
@@ -15,7 +17,10 @@ Map map;
 Void papaVoid;
 Pointer[] pointers = new Pointer[POINTER_AMOUNT];
 
+
 boolean gameStarted = false;
+boolean zoomAnimationPlaying = false;
+Date animationStart;
 
 //screen size CANNOT be a variable, this is used for map translations
 int SCREEN_X = 800;
@@ -37,6 +42,7 @@ void setup() {
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
+  zoomGif = loadImage("gameload.gif");
   
   ptrBoi = new PointerPlayer();
   stkBoi = new StackPlayer();
@@ -58,7 +64,8 @@ TODO: prevent starvation as one player holds down a key
 void keyPressed() {
   
   if (!gameStarted) {
-    gameStarted = true;
+    zoomAnimationPlaying = true;
+    animationStart = new Date();
   }
   
   if (key == CODED) {
@@ -97,8 +104,17 @@ void keyPressed() {
 
 void draw() {
   if (!gameStarted) {
-    //draw main menu
-    image(menuBg, -50, 0);
+    if (!zoomAnimationPlaying) {
+      //draw main menu
+      image(menuBg, -50, 0);
+    }  else { //use time-variable busy waiting
+      image(zoomGif, -50,0);
+      Date now = new Date();
+      println(now.getTime() - animationStart.getTime());
+      if (now.getTime() - animationStart.getTime() > 2000) {
+        gameStarted = true;
+      }
+    }
     
   } else {
     background(0); //this is REDRAW
