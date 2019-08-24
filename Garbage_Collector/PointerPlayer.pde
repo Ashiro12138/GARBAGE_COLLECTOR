@@ -21,9 +21,7 @@ class PointerPlayer extends Player {
       initPosition();
   }
   
-<<<<<<< Updated upstream
-  
-=======
+
   public void moveX(int x) {
     int newX = this.x + x;
     if (newX >= 0 && newX <= 1590) {
@@ -37,6 +35,6 @@ class PointerPlayer extends Player {
        this.y += y; 
     }
   }
->>>>>>> Stashed changes
+
   
 }

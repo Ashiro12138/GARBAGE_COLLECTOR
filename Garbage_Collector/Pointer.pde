@@ -4,13 +4,9 @@ class Pointer{
   private int h = 17;
   
   Pointer() {
-<<<<<<< Updated upstream
     this.x = (int)random(0, width * 2 - w);
     this.y = (int)random(0, height * 2 - h);
-=======
-    this.x = (int)random(0, width);
-    this.y = (int)random(0, height);
->>>>>>> Stashed changes
+
   }
   
   Pointer(int x, int y) {
@@ -18,14 +14,11 @@ class Pointer{
     this.y = y;
   }
   
-<<<<<<< Updated upstream
+
   public void display(int section) {
     //rect(x, y, w, h);
     image(ptrImg, map.translateX(section,x) , map.translateY(section, y)); 
-=======
-  public void display() {
-    rect(x, y, w, h);
->>>>>>> Stashed changes
+
   }
   
   public int collision(int playerX, int playerY, int playerWidth, int playerHeight) {
