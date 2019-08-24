@@ -89,6 +89,9 @@ void draw() {
     pointers[i].display();
   }
   papaVoid.display();
+  if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 17, 17)) {
+    println("Touched");
+  }
   ptrBoi.move();
   stkBoi.move();
    
