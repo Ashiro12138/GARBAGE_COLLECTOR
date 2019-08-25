@@ -28,14 +28,14 @@ class StackPlayer extends Player {
  //constructor
  public StackPlayer() {
    spriteList.add("stack_base.png");
-   spriteList.add("stackHitAnimation/Stack_hit1.png");
-   spriteList.add("stackHitAnimation/Stack_hit2.png");
-   spriteList.add("stackHitAnimation/Stack_hit3.png");
-   spriteList.add("stackHitAnimation/Stack_hit4.png");
-   spriteList.add("stackHitAnimation/Stack_hit5.png");
-   spriteList.add("stackHitAnimation/Stack_hit6.png");
-   spriteList.add("stackHitAnimation/Stack_hit7.png");
-   spriteList.add("stackHitAnimation/Stack_hit8.png");
+   spriteList.add("stackHitAnimation/stack_hit1.png");
+   spriteList.add("stackHitAnimation/stack_hit2.png");
+   spriteList.add("stackHitAnimation/stack_hit3.png");
+   spriteList.add("stackHitAnimation/stack_hit4.png");
+   spriteList.add("stackHitAnimation/stack_hit5.png");
+   spriteList.add("stackHitAnimation/stack_hit6.png");
+   spriteList.add("stackHitAnimation/stack_hit7.png");
+   spriteList.add("stackHitAnimation/stack_hit8.png");
    initPosition(); 
    speed = 8; 
  }
