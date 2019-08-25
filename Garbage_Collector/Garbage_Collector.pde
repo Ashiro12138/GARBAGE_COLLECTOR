@@ -58,7 +58,7 @@ void setup() {
   font = createFont("COMIC.TTF", 24);
   textFont(font);
   zoomGif = new Animation("MenuAnimation/menu_sprite", 53, "jpg");
-  stkHit = new Animation("stackHitAnimation/Stack_hit", 8, "png");
+  stkHit = new Animation("stackHitAnimation/stack_hit", 8, "png");
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   serverWait = loadImage("server_wait.png");
