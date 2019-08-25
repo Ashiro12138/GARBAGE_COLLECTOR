@@ -50,6 +50,7 @@ class PointerGame implements Game {
       if (ptrBoi.stashCount != lastStash) {
         println("stash,"+ptrBoi.stashCount);
         c.write("stash,"+ptrBoi.stashCount+"\n");
+        stkBoi.setSkin();
       }
       
       
@@ -84,10 +85,10 @@ class PointerGame implements Game {
            stkBoi.y = int(data[2]);
            println("stkBoi moved to: " , stkBoi.x, stkBoi.y);
   
-        } else if (cmd.equals("health")) {
-           stkBoi.health = int(data[1]);
+        } else if (cmd.equals("damageSelf")) {
+           stkBoi.damageSelf = int(data[1]);
            stkBoi.setSkin();
-           println("stkBoi health set to: " , stkBoi.health);
+           println("stkBoi damageSelf set to: ", stkBoi.damageSelf);
         } else if (cmd.equals("overSTK")) {
            //handle game over 
            stkBoi.death = true;

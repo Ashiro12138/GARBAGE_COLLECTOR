@@ -4,12 +4,15 @@ class StackPlayer extends Player {
  //x = 780;
  //y = 580;
  boolean death = false;
+ int damageSelf = 0;
+ int damageHeap = 0;
  
  /*return the image that represents the current state of the stk
   *as it fills up it returns a more 'filled up' stage
   * TODO: handle the filling up
  */
- int health = 8;
+ int maxHealth = 8;
+ int health = maxHealth;
  ArrayList<String> spriteList = new ArrayList();
  
  PImage getSkin() {
@@ -56,6 +59,8 @@ class StackPlayer extends Player {
   }
   
   public void setSkin() {
+    damageHeap = (int)(ptrBoi.stashCount / 5);
+    health = maxHealth - (damageSelf + damageHeap);
     if (health < 0) {
       death = true;
       deathTimer = new Date();
@@ -95,7 +100,7 @@ class StackPlayer extends Player {
      }
      for (int i = 0; i < POINTER_AMOUNT; i++) {
           if(pointers[i].collision(this.x, this.y, 17, 17)) {
-            this.health--; 
+            damageSelf += 1;
             setSkin();
             println("you did oopsie");
             break;

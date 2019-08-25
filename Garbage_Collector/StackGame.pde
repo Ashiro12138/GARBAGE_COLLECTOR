@@ -6,7 +6,7 @@ class StackGame implements Game {
   Server s;
   Client c;
   
-  int lastX, lastY, lastHealth;
+  int lastX, lastY, lastHealth, lastDamageSelf;
   
   boolean stackGameStarted = false;
   
@@ -65,17 +65,22 @@ class StackGame implements Game {
     if (stkBoi.health !=  lastHealth) {
       c.write("health,"+stkBoi.health+"\n");
     }
+    if (stkBoi.damageSelf != lastDamageSelf) {
+      println("damageSelf "+stkBoi.damageSelf+"\n");
+      c.write("damageSelf,"+stkBoi.damageSelf+"\n");
+    }
     if (stkBoi.death) {
-      c.write("overSTK");
+      c.write("overSTK\n");
     }
     if (ptrBoi.death) {
-      c.write("overPTR");
+      c.write("overPT\n");
     }
     
     stkBoi.render();
     lastX = stkBoi.x;
     lastY = stkBoi.y;
     lastHealth = stkBoi.health;
+    lastDamageSelf = stkBoi.damageSelf;
     
     
     //println("stkBoi section: " + map.getSectionByXY(stkBoi.x, stkBoi.y) + " ptrBoi section: " +  map.getSectionByXY(ptrBoi.x, ptrBoi.y));
@@ -101,6 +106,7 @@ class StackGame implements Game {
           println("collect " , ptrBoi.collectCount);
       } else if (cmd.equals("stash")) {
          ptrBoi.stashCount = int(data[1]); 
+         stkBoi.setSkin();
          println("stash", ptrBoi.stashCount);
       } else if (cmd.equals("overPTR")) {
          //handle game over 
