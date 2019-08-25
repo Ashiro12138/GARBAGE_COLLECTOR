@@ -1,5 +1,0 @@
-interface Game {
-  
-  void tick();
-  
-}
