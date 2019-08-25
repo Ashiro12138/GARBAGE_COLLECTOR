@@ -39,10 +39,19 @@ class PointerGame implements Game {
         image(ptrIndicator, ptrBoi.x, ptrBoi.y-31);
       }
       
-     if (ptrBoi.x != lastX || ptrBoi.y != lastY) {
+      if (ptrBoi.x != lastX || ptrBoi.y != lastY) {
        println("pos,"+ptrBoi.x+","+ptrBoi.y+"\n");
        c.write("pos,"+ptrBoi.x+","+ptrBoi.y+"\n"); 
       }
+      if (ptrBoi.collectCount != lastCollect) {
+        println("collect,"+ptrBoi.collectCount);
+        c.write("collect,"+ptrBoi.collectCount+"\n");
+      }
+      if (ptrBoi.stashCount != lastStash) {
+        println("stash,"+ptrBoi.stashCount);
+        c.write("stash,"+ptrBoi.stashCount+"\n");
+      }
+      
       
       if (ptrBoi.death) {
         c.write("overPTR\n");
@@ -53,6 +62,8 @@ class PointerGame implements Game {
       
       lastX = ptrBoi.x;
       lastY = ptrBoi.y;
+      lastCollect = ptrBoi.collectCount;
+      lastStash = ptrBoi.stashCount;
       
       //only render if they are in the same section
       if (map.getSectionByXY(stkBoi.x, stkBoi.y) == map.getSectionByXY(ptrBoi.x, ptrBoi.y)) {

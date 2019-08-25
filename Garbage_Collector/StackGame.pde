@@ -101,7 +101,7 @@ class StackGame implements Game {
           println("collect " , ptrBoi.collectCount);
       } else if (cmd.equals("stash")) {
          ptrBoi.stashCount = int(data[1]); 
-         println("stash" , ptrBoi.stashCount);
+         println("stash", ptrBoi.stashCount);
       } else if (cmd.equals("overPTR")) {
          //handle game over 
          ptrBoi.death = true;

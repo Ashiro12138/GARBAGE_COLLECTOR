@@ -11,6 +11,7 @@ PImage bombImg;
 PImage bootsImg;
 PImage heartImg;
 PImage greenPtr;
+PImage voidImg;
 PImage pointerOption, stackOption;
 PImage serverWait, enterIP;
 int menuOption = 0; //0 is pointer, 1 is stack
@@ -64,12 +65,12 @@ void setup() {
   bombImg = loadImage("PowerUps/Bomb.jpg");
   bootsImg = loadImage("PowerUps/Boots.jpg");
   heartImg = loadImage("PowerUps/Heart.jpg");
+  voidImg = loadImage("The Void.jpg");
   
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
   zoomGif = new Animation("MenuAnimation/menu_sprite", 53, "jpg");
-  stkHit = new Animation("stackHitAnimation/stack_hit", 8, "png");
   stkDeath = new Animation("StackDeath/stack_death", 15, "png");
   ptrDeath = new Animation("PointerDeath/pointer_death",6,"png");
   pointerOption = loadImage("option_pointer.png");
@@ -177,10 +178,16 @@ void draw() {
     background(0); //this is REDRAW
     int ptrSection = map.getSectionByXY(ptrBoi.x, ptrBoi.y);
     int stkSection = map.getSectionByXY(stkBoi.x, stkBoi.y);
+    if (menuOption==0){
+      papaVoid.display(ptrSection);
+    } else {
+      papaVoid.display(stkSection);
+    }
     for (int i = 0; i < POINTER_AMOUNT; ++i) {
       pointers[i].chanceMove();
       if(pointers[i].collision(ptrBoi.x, ptrBoi.y, 33, 34)){
-        ptrBoi.collectCount += 1;
+        if(menuOption==0)
+          ptrBoi.collectCount += 1;
         pointers[i].collected = true;
         pointers[i].x = -100;
         pointers[i].y = -100;
@@ -193,11 +200,7 @@ void draw() {
       }
         
     }
-    if (menuOption==0){
-      papaVoid.display(ptrSection);
-    } else {
-      papaVoid.display(stkSection);
-    }
+    
     
     // I know this should be in a class, will do later
     if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 33, 34)) {
