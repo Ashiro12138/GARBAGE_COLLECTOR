@@ -14,13 +14,13 @@ class Map {
 
   public int getSectionByXY(int x, int y) {
 
-     if (x <= 800 && y <= 600) {
+     if (x <= width && y <= height) {
        return 0;
-     } else if (x > 800 && y < 600) {
+     } else if (x > width && y < height) {
        return 1;
-     } else if (x < 800 && y > 600) {
+     } else if (x < width && y > height) {
        return 2;
-     } else { //if (x > 600 && y > 800) {
+     } else { //if (x > width && y > height) {
        return 3;
      }
   }
@@ -33,7 +33,7 @@ class Map {
      //int section = getSectionByXY(plx, player.y);
      //println("sec ", section);
      if (section % 2 == 1) { //if odd section (1 or 3), translate X, else do nothing
-         return x - 800;
+         return x - width;
      } else {
          return x;
      }
@@ -43,7 +43,7 @@ class Map {
     //int section = getSectionByXY(player.x, player.y);
     //println("sec ", section);
      if (section > 1) { //translate Y for section 2 and 3 
-       return y - 600;
+       return y - height;
      } else {
        return y;
      }

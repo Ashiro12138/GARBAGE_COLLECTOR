@@ -1,7 +1,7 @@
 class Pointer{
   public int x, y;
-  private int w = 17;
-  private int h = 17;
+  private int w = 33;
+  private int h = 34;
   public boolean collected = false;
     
   Pointer() {

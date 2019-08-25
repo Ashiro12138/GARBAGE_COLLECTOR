@@ -1,6 +1,6 @@
 layer=_Layer 
-for i in {1..50}
+for i in {1..53}
 do
-    let "a = 51 - $i"
-    mv "_00$a$layer $i.jpg" menu_sprite$i.jpg
+    let "a = 53 - $i"
+    mv "_000$a$layer $i.jpg" menu_sprite$i.jpg
 done
