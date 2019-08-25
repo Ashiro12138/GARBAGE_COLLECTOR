@@ -65,6 +65,12 @@ class StackGame implements Game {
     if (stkBoi.health !=  lastHealth) {
       c.write("health,"+stkBoi.health+"\n");
     }
+    if (stkBoi.death) {
+      c.write("overSTK");
+    }
+    if (ptrBoi.death) {
+      c.write("overPTR");
+    }
     
     stkBoi.render();
     lastX = stkBoi.x;
@@ -96,8 +102,13 @@ class StackGame implements Game {
       } else if (cmd.equals("stash")) {
          ptrBoi.stashCount = int(data[1]); 
          println("stash" , ptrBoi.stashCount);
-      } else if (cmd.equals("over")) {
+      } else if (cmd.equals("overPTR")) {
          //handle game over 
+         ptrBoi.death = true;
+         deathTimer = new Date();
+      } else if (cmd.equals("overSTK")) {
+         stkBoi.death = true;
+         deathTimer = new Date();
       }
     }
   }
