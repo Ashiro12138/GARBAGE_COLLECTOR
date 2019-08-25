@@ -1,6 +1,7 @@
 class PointerPlayer extends Player {
   int collectCount = 0; //amount of pointers collected
   int stashCount = 0; //amount of pointers stashed
+  boolean death = false;
   
   boolean canLeft = true;
   boolean canRight = true;
@@ -40,22 +41,45 @@ class PointerPlayer extends Player {
     }  
   }
  
+  @Override
+  public void render() {
+    if (!death) {
+      int section = map.getSectionByXY(this.x, this.y);
+      image(this.getSkin(), map.translateX(section, x), map.translateY(section, y));
+    } else {
+     Date now = new Date();
+     if (now.getTime() - deathTimer.getTime() > 1400) {
+       exit();
+     }
+     fill(0);
+     rect(x, y, 33, 37);
+     noFill();
+     ptrDeath.display(x, y, 33, 37);
+     delay(100);
+     
+   }
+  }
+ 
   public void moveX(int x) {
-    if (x > 0 && canRight || x < 0 && canLeft) {
-      int newX = this.x + x;
-      if (newX >= 0 && newX <= 1590) {
-         this.x += x; 
+    if (!death) {
+      if (x > 0 && canRight || x < 0 && canLeft) {
+        int newX = this.x + x;
+        if (newX >= 0 && newX <= 1590) {
+           this.x += x; 
+        }
       }
     }
   }
   
   public void moveY(int y) {
-    if (y > 0 && canDown || y < 0 && canUp) {
-      int newY = this.y + y;
-      if (newY >= 0 && newY <= 1190) {
-         this.y += y; 
+    if (!death) {
+      if (y > 0 && canDown || y < 0 && canUp) {
+        int newY = this.y + y;
+        if (newY >= 0 && newY <= 1190) {
+           this.y += y; 
+        }
       }
-    }    
+    }
   }
   
   public void freeMove() {
@@ -67,6 +91,5 @@ class PointerPlayer extends Player {
   
   public void die() {
    //Show Game Over and die
-   println("I killed you lol");
   }
 }

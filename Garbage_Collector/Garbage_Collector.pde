@@ -28,6 +28,8 @@ Pointer[] pointers = new Pointer[POINTER_AMOUNT];
 Game game;
 Animation zoomGif;
 Animation stkHit;
+Animation stkDeath;
+Animation ptrDeath;
 
 // Power ups
 int itemsInGame = 0;
@@ -40,6 +42,7 @@ boolean gameStarted = false;
 boolean zoomAnimationPlaying = false;
 Date animationStart;
 Date indicationTimer;
+Date deathTimer;
 
 //screen size CANNOT be a variable, this is used for map translations
 int SCREEN_X = 2560;
@@ -62,6 +65,8 @@ void setup() {
   textFont(font);
   zoomGif = new Animation("MenuAnimation/menu_sprite", 53, "jpg");
   stkHit = new Animation("stackHitAnimation/stack_hit", 8, "png");
+  stkDeath = new Animation("StackDeath/stack_death", 15, "png");
+  ptrDeath = new Animation("PointerDeath/pointer_death",6,"png");
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   serverWait = loadImage("server_wait.png");

@@ -43,6 +43,10 @@ class PointerGame implements Game {
        println("pos,"+ptrBoi.x+","+ptrBoi.y+"\n");
        c.write("pos,"+ptrBoi.x+","+ptrBoi.y+"\n"); 
       }
+      
+      if (ptrBoi.death) {
+        c.write("overPTR\n");
+      }
     
     
       ptrBoi.render();
@@ -73,8 +77,13 @@ class PointerGame implements Game {
            stkBoi.health = int(data[1]);
            stkBoi.setSkin();
            println("stkBoi health set to: " , stkBoi.health);
-        } else if (cmd.equals("over")) {
+        } else if (cmd.equals("overSTK")) {
            //handle game over 
+           stkBoi.death = true;
+           deathTimer = new Date();
+        } else if (cmd.equals("overPTR")) {
+           ptrBoi.death = true;
+           deathTimer = new Date();
         }
       }
       

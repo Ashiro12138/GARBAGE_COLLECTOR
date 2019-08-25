@@ -1,7 +1,6 @@
 layer=_Stack_hit8-copy-
-for i in {2..15}
+for i in {4..18}
 do
-    let "a = 17 - $i"
-    let "b = $i+1"
-    mv _000$a$layer$i.png stack_death$b.png 
+    let "a = $i-2"
+    mv stack_death$i.png stack_death$a.png
 done
