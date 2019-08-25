@@ -4,6 +4,7 @@ import java.util.Date;
 
 PImage ptrImg;  // Declare a variable of type PImage
 PImage stkImg;
+PImage ptrIndicator;
 PImage menuBg;
 PImage eyeImg;
 PImage bombImg;
@@ -38,6 +39,7 @@ Heart heart;
 boolean gameStarted = false;
 boolean zoomAnimationPlaying = false;
 Date animationStart;
+Date indicationTimer;
 
 //screen size CANNOT be a variable, this is used for map translations
 int SCREEN_X = 2560;
@@ -48,6 +50,7 @@ void setup() {
   size(1280, 800);
   ptrImg = loadImage("pointer_ai.png");
   stkImg = loadImage("stack_base.png");
+  ptrIndicator = loadImage("PlayerIndicator.png");
   greenPtr = loadImage("PowerUps/greenPointer.jpg");
   eyeImg = loadImage("PowerUps/Eye.jpg");
   bombImg = loadImage("PowerUps/Bomb.jpg");
@@ -138,6 +141,7 @@ void draw() {
         if (menuOption == 0) { //pointer game
           image(enterIP, 90, -20, 1280 * 0.8, 800 * 0.8); 
           game = new PointerGame(this);
+          indicationTimer = new Date();
         } else if (menuOption == 1) {
           image(menuBg, -50, 0);
           image(serverWait, 90, -20, 1280 * 0.8, 800 * 0.8);

@@ -34,6 +34,10 @@ class PointerGame implements Game {
     }
   
     public void tick() {
+      Date now = new Date();
+      if (now.getTime() - indicationTimer.getTime() < 5000) {
+        image(ptrIndicator, ptrBoi.x, ptrBoi.y-31);
+      }
       
      if (ptrBoi.x != lastX || ptrBoi.y != lastY) {
        println("pos,"+ptrBoi.x+","+ptrBoi.y+"\n");
