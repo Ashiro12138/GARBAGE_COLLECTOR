@@ -1,7 +1,7 @@
 
 class Void{
   public int x, y;
-  private int extent = 300;
+  private int extent = 500;
   private int radius = extent/2;
   private float radius_sqr = pow(radius, 2);
   Void(int x, int y){

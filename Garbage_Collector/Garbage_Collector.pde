@@ -40,15 +40,15 @@ boolean zoomAnimationPlaying = false;
 Date animationStart;
 
 //screen size CANNOT be a variable, this is used for map translations
-int SCREEN_X = 800;
-int SCREEN_Y = 600;
+int SCREEN_X = 2560;
+int SCREEN_Y = 1600;
 
 
 void setup() {
-  size(800, 600);
+  size(1280, 800);
   ptrImg = loadImage("pointer_ai.png");
   stkImg = loadImage("stack_base.png");
-  greenPtr = loadImage("PowerUps/greenPointer.png");
+  greenPtr = loadImage("PowerUps/greenPointer.jpg");
   eyeImg = loadImage("PowerUps/Eye.jpg");
   bombImg = loadImage("PowerUps/Bomb.jpg");
   bootsImg = loadImage("PowerUps/Boots.jpg");
@@ -57,8 +57,8 @@ void setup() {
   menuBg = loadImage("computer.png");
   font = createFont("COMIC.TTF", 24);
   textFont(font);
-  zoomGif = new Animation("MenuAnimation/menu_sprite", 51, "jpg");
-  stkHit = new Animation("stackHitAnimation/stack_hit", 8, "png");
+  zoomGif = new Animation("MenuAnimation/menu_sprite", 53, "jpg");
+  stkHit = new Animation("stackHitAnimation/Stack_hit", 8, "png");
   pointerOption = loadImage("option_pointer.png");
   stackOption = loadImage("option_stack.png");
   serverWait = loadImage("server_wait.png");
@@ -124,23 +124,23 @@ void draw() {
       //draw main menu
       image(menuBg, -50, 0);
       if (menuOption == 0) {
-        image(pointerOption, 90, -20, 800 * 0.8, 600 * 0.8);
+        image(pointerOption, 90, -20, 1280 * 0.8, 800 * 0.8);
       } else {
-        image(stackOption, 90, -20, 800 * 0.8, 600 * 0.8);
+        image(stackOption, 90, -20, 1280 * 0.8, 800 * 0.8);
       }
 
     }  else { //use time-variable busy waiting
-      //image(zoomGif, -50,0);
+      zoomGif.display(0, 0, width, height);
       Date now = new Date();
       println(now.getTime() - animationStart.getTime());
-      if (now.getTime() - animationStart.getTime() > 500) { //milliseconds time out to play animation
+      if (now.getTime() - animationStart.getTime() > 1500) { //milliseconds time out to play animation
         gameStarted = true;
         if (menuOption == 0) { //pointer game
-          image(enterIP, 90, -20, 800 * 0.8, 600 * 0.8); 
+          image(enterIP, 90, -20, 1280 * 0.8, 800 * 0.8); 
           game = new PointerGame(this);
         } else if (menuOption == 1) {
           image(menuBg, -50, 0);
-          image(serverWait, 90, -20, 800 * 0.8, 600 * 0.8);
+          image(serverWait, 90, -20, 1280 * 0.8, 800 * 0.8);
           game = new StackGame(this); 
         }
         for (int i = 0; i < POINTER_AMOUNT; ++i) {
@@ -159,7 +159,7 @@ void draw() {
     int stkSection = map.getSectionByXY(stkBoi.x, stkBoi.y);
     for (int i = 0; i < POINTER_AMOUNT; ++i) {
       pointers[i].chanceMove();
-      if(pointers[i].collision(ptrBoi.x, ptrBoi.y, 17, 17)){
+      if(pointers[i].collision(ptrBoi.x, ptrBoi.y, 33, 34)){
         ptrBoi.collectCount += 1;
         pointers[i].collected = true;
         pointers[i].x = -100;
@@ -180,7 +180,7 @@ void draw() {
     }
     
     // I know this should be in a class, will do later
-    if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 17, 17)) {
+    if (papaVoid.collision(ptrBoi.x, ptrBoi.y, 33, 34)) {
       ptrBoi.stashCount += ptrBoi.collectCount;
       ptrBoi.collectCount = 0;
       if (papaVoid.x < ptrBoi.x) {
@@ -200,13 +200,13 @@ void draw() {
     
     // Check Powerups 
     eye.update();
-    eye.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    eye.checkCollision(stkBoi.x,stkBoi.y, 33, 34);
     boots.update();
-    boots.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    boots.checkCollision(stkBoi.x,stkBoi.y, 33, 34);
     bomb.update();
-    bomb.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    bomb.checkCollision(stkBoi.x,stkBoi.y, 34, 34);
     heart.update();
-    heart.checkCollision(stkBoi.x,stkBoi.y, 17, 17);
+    heart.checkCollision(stkBoi.x,stkBoi.y, 33, 34);
 
     text("Memory Stolen:", 10, 30);
     text(ptrBoi.collectCount, 195, 30);
