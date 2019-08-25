@@ -31,10 +31,15 @@ Animation stkHit;
 
 // Power ups
 int itemsInGame = 0;
+int chances[] = new int[100];
+int chancePtr = 0;
+Point points[] = new Point[100];
+int pointPtr = 0;
 Eye eye;
 Boots boots;
 Bomb bomb;
 Heart heart;
+
 
 boolean gameStarted = false;
 boolean zoomAnimationPlaying = false;
@@ -75,8 +80,7 @@ void setup() {
   eye = new Eye();
   boots = new Boots();
   heart = new Heart();
-  bomb = new Bomb();
-  
+  bomb = new Bomb();  
 
   papaVoid = new Void(width, height);
 
@@ -150,10 +154,17 @@ void draw() {
         for (int i = 0; i < POINTER_AMOUNT; ++i) {
           pointers[i] = new Pointer();
         }
-        eye.initPos();
+        
+        //eye.initPos();
         boots.initPos();
-        heart.initPos();
+        //heart.initPos();
         bomb.initPos(); 
+        
+        for (int i = 0; i < 100; i++) {
+          chances[i] = (int)random(0, 1000000);
+          points[i] = new Point();
+          points[i].newPoint();
+        }
       }
     }
     
@@ -201,7 +212,7 @@ void draw() {
     } else {
       ptrBoi.freeMove();
     }
-    
+  
     // Check Powerups 
     eye.update();
     eye.checkCollision(stkBoi.x,stkBoi.y, 33, 34);
@@ -211,7 +222,6 @@ void draw() {
     bomb.checkCollision(stkBoi.x,stkBoi.y, 34, 34);
     heart.update();
     heart.checkCollision(stkBoi.x,stkBoi.y, 33, 34);
-
     text("Memory Stolen:", 10, 30);
     text(ptrBoi.collectCount, 195, 30);
     text("Memory Stashed:", 10, 60);
