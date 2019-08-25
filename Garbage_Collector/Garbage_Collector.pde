@@ -30,11 +30,11 @@ Animation zoomGif;
 Animation stkHit;
 
 // Power ups
-int itemsInGame = 0;
+int itemsInGame;
 int chances[] = new int[100];
 int chancePtr = 0;
 Point points[] = new Point[100];
-int pointPtr = 0;
+int pointPtr;
 Eye eye;
 Boots boots;
 Bomb bomb;
@@ -81,6 +81,8 @@ void setup() {
   boots = new Boots();
   heart = new Heart();
   bomb = new Bomb();  
+  pointPtr = 0;
+  itemsInGame = 0;
 
   papaVoid = new Void(width, height);
 
