@@ -131,9 +131,9 @@ void draw() {
       //draw main menu
       image(menuBg, -50, 0);
       if (menuOption == 0) {
-        image(pointerOption, 90, -20, 1280 * 0.8, 800 * 0.8);
+        image(pointerOption, 160, -20, 1280 * 0.7, 800 * 0.7);
       } else {
-        image(stackOption, 90, -20, 1280 * 0.8, 800 * 0.8);
+        image(stackOption, 160, -20, 1280 * 0.7, 800 * 0.7);
       }
 
     }  else { //use time-variable busy waiting
