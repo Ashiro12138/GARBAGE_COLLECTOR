@@ -10,8 +10,8 @@ class Boots extends Item {
   
   @Override
   public void addEffects() {
-    this.duration = 600;
-    stkBoi.setSpeed(9);
+    this.duration = 15 * 30; 
+    stkBoi.setSpeed(10);
     this.inPlayer = true;
   }
   
