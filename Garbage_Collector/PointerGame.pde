@@ -9,7 +9,7 @@ class PointerGame implements Game {
     
     public PointerGame(PApplet app) {
       
-      c = new Client(app, "127.0.0.1", 2310); 
+      c = new Client(app, "192.168.0.1", 2310);  //172.20.10.3
       c.write("hello\n"); //handshake
       
         
@@ -38,26 +38,31 @@ class PointerGame implements Game {
       if (now.getTime() - indicationTimer.getTime() < 5000) {
         image(ptrIndicator, ptrBoi.x, ptrBoi.y-31);
       }
-      
-      if (ptrBoi.x != lastX || ptrBoi.y != lastY) {
-       println("pos,"+ptrBoi.x+","+ptrBoi.y+"\n");
-       c.write("pos,"+ptrBoi.x+","+ptrBoi.y+"\n"); 
+      try {
+        
+        if (ptrBoi.x != lastX || ptrBoi.y != lastY) {
+         println("pos,"+ptrBoi.x+","+ptrBoi.y+"\n");
+         c.write("pos,"+ptrBoi.x+","+ptrBoi.y+"\n"); 
+        }
+        if (ptrBoi.collectCount != lastCollect) {
+          println("collect,"+ptrBoi.collectCount);
+          c.write("collect,"+ptrBoi.collectCount+"\n");
+        }
+        if (ptrBoi.stashCount != lastStash) {
+          println("stash,"+ptrBoi.stashCount);
+          c.write("stash,"+ptrBoi.stashCount+"\n");
+          stkBoi.setSkin();
+        }
+        
+        
+        if (ptrBoi.death) {
+          c.write("overPTR\n");
+        }
       }
-      if (ptrBoi.collectCount != lastCollect) {
-        println("collect,"+ptrBoi.collectCount);
-        c.write("collect,"+ptrBoi.collectCount+"\n");
+      catch (java.lang.NullPointerException e) {
+        println("connection closed, game over");
+        System.exit(1);
       }
-      if (ptrBoi.stashCount != lastStash) {
-        println("stash,"+ptrBoi.stashCount);
-        c.write("stash,"+ptrBoi.stashCount+"\n");
-        stkBoi.setSkin();
-      }
-      
-      
-      if (ptrBoi.death) {
-        c.write("overPTR\n");
-      }
-    
     
       ptrBoi.render();
       
@@ -74,29 +79,36 @@ class PointerGame implements Game {
       if (c.available() <= 0) {
         return;
       }
-      String line = c.readString();
-      String[] datas = split(line, "\n");
-      for (String new_data: datas){
-        String[] data = split(new_data, ",");
-        String cmd = data[0]; 
       
-        if (cmd.equals("pos")) {
-           stkBoi.x = int(data[1]);
-           stkBoi.y = int(data[2]);
-           println("stkBoi moved to: " , stkBoi.x, stkBoi.y);
-  
-        } else if (cmd.equals("damageSelf")) {
-           stkBoi.damageSelf = int(data[1]);
-           stkBoi.setSkin();
-           println("stkBoi damageSelf set to: ", stkBoi.damageSelf);
-        } else if (cmd.equals("overSTK")) {
-           //handle game over 
-           stkBoi.death = true;
-           deathTimer = new Date();
-        } else if (cmd.equals("overPTR")) {
-           ptrBoi.death = true;
-           deathTimer = new Date();
+      try {
+        
+        String line = c.readString();
+        String[] datas = split(line, "\n");
+        for (String new_data: datas){
+          String[] data = split(new_data, ",");
+          String cmd = data[0]; 
+        
+          if (cmd.equals("pos")) {
+             stkBoi.x = int(data[1]);
+             stkBoi.y = int(data[2]);
+             println("stkBoi moved to: " , stkBoi.x, stkBoi.y);
+    
+          } else if (cmd.equals("damageSelf")) {
+             stkBoi.damageSelf = int(data[1]);
+             stkBoi.setSkin();
+             println("stkBoi damageSelf set to: ", stkBoi.damageSelf);
+          } else if (cmd.equals("overSTK")) {
+             //handle game over 
+             stkBoi.death = true;
+             deathTimer = new Date();
+          } else if (cmd.equals("overPTR")) {
+             ptrBoi.death = true;
+             deathTimer = new Date();
+          }
         }
+      } catch (java.lang.NullPointerException e) {
+         println("game over");
+         System.exit(1);
       }
       
       

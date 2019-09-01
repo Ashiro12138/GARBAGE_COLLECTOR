@@ -48,6 +48,7 @@ class PointerPlayer extends Player {
       image(this.getSkin(), map.translateX(section, x), map.translateY(section, y));
     } else {
      Date now = new Date();
+     print(now.getTime() - deathTimer.getTime());
      if (now.getTime() - deathTimer.getTime() > 1400) {
        exit();
      }
