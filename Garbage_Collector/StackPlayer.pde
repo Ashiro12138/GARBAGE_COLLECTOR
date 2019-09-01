@@ -43,7 +43,7 @@ class StackPlayer extends Player {
  public void moveX(int x) {
    if(!death){
       int newX = this.x + x;
-      if (newX >= 0 && newX <= 1590) {
+      if (newX >= 0 && newX <= width*2 - 10) {
          this.x += x; 
       }
    }
@@ -52,7 +52,7 @@ class StackPlayer extends Player {
   public void moveY(int y) {
     if(!death){
       int newY = this.y + y;
-      if (newY >= 0 && newY <= 1190) {
+      if (newY >= 0 && newY <= height*2 - 10) {
          this.y += y; 
       }    
     }

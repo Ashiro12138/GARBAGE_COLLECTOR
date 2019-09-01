@@ -9,14 +9,14 @@ class Player {
    
    public void moveX(int x) {
     int newX = this.x + x;
-    if (newX >= 0 && newX <= 1590) {
+    if (newX >= 0 && newX <= width - 10) {
        this.x += x; 
     }
   }
   
   public void moveY(int y) {
     int newY = this.y + y;
-    if (newY >= 0 && newY <= 1190) {
+    if (newY >= 0 && newY <= height - 10) {
        this.y += y; 
     }
   }

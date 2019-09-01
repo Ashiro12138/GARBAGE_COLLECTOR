@@ -9,7 +9,11 @@ class PointerGame implements Game {
     
     public PointerGame(PApplet app) {
       
+<<<<<<< HEAD
       c = new Client(app, "192.168.0.1", 2310);  //172.20.10.3
+=======
+      c = new Client(app, "172.20.10.3", 2310); 
+>>>>>>> fe3e0f134157a8e9f7ec89cacf5989cfe6cdb1ef
       c.write("hello\n"); //handshake
       
         

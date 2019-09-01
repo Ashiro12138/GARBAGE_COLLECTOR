@@ -65,7 +65,7 @@ class PointerPlayer extends Player {
     if (!death) {
       if (x > 0 && canRight || x < 0 && canLeft) {
         int newX = this.x + x;
-        if (newX >= 0 && newX <= 1590) {
+        if (newX >= 0 && newX <= width*2 - 10) {
            this.x += x; 
         }
       }
@@ -76,7 +76,7 @@ class PointerPlayer extends Player {
     if (!death) {
       if (y > 0 && canDown || y < 0 && canUp) {
         int newY = this.y + y;
-        if (newY >= 0 && newY <= 1190) {
+        if (newY >= 0 && newY <= height*2 - 10) {
            this.y += y; 
         }
       }

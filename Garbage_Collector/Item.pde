@@ -11,6 +11,7 @@ class Item {
   
   public void initPos() {
     this.inGame = true;
+    itemsInGame++;
     this.x = (int)random(0, width / 2);
     this.y = (int)random(0, height / 2);
   }
